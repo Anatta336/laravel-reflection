@@ -12,6 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // create a single admin user
         $admin = new User();
         $admin->name = 'Administrator';
         $admin->email = 'admin@example.com';
