@@ -1,5 +1,17 @@
 # Laravel Reflection
 
+Generate database
+```
+php artisan migrate:refresh --seed
+```
+
+Host locally
+```
+php artisan serve
+```
+
+Access at http://localhost:8000/
+
 ## SQlite CLI
 
 powershell:
