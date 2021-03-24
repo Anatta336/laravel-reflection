@@ -16,7 +16,7 @@ Access at http://localhost:8000/
 
 powershell:
 ```
-& 'C:\Program Files\sqlite3\sqlite3.exe' db\netmatters.db
+& 'C:\Program Files\sqlite3\sqlite3.exe' database\database.sqlite
 ```
 
 Make the output more human-readable:
