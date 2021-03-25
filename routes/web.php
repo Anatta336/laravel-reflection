@@ -26,6 +26,17 @@ Route::delete('/employee/{employee}', 'EmployeeController@destroy')
 Route::put('/employee/{employee}', 'EmployeeController@create')
     ->name('employee.create')->middleware('auth');
 
+Route::get('/company/all', 'CompanyController@index')
+    ->name('company.all');
+Route::get('/company/{employee}', 'CompanyController@show')
+    ->name('company.show');
+Route::get('/company/{employee}/edit', 'CompanyController@edit')
+    ->name('company.edit')->middleware('auth');
+Route::delete('/company/{employee}', 'CompanyController@destroy')
+    ->name('company.destroy')->middleware('auth');
+Route::put('/company/{employee}', 'CompanyController@create')
+    ->name('company.create')->middleware('auth');
+
 // add Auth routes, but set option to disable registering new users
 Auth::routes(['register' => false]);
 
