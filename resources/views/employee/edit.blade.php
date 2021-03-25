@@ -17,11 +17,23 @@
         @method('PUT')
 
         <label class="form-label" for="first_name">{{ __('employees.firstName') }}</label>
-        <input class="form-control" type="text" name="first_name" id="first_name" required value="{{ $employee->first_name }}">
+        <input class="form-control" type="text" name="first_name" id="first_name" required
+            value="{{ old('first_name') ?? $employee->first_name }}">
+        @if ($errors->has('first_name'))
+            <div class="alert alert-danger">
+                <p>{{ $errors->first('first_name') }}</p>
+            </div>
+        @endif
         
         <label class="form-label" for="last_name">{{ __('employees.lastName') }}</label>
-        <input class="form-control" type="text" name="last_name" id="last_name" required value="{{ $employee->last_name }}">
-        
+        <input class="form-control" type="text" name="last_name" id="last_name" required
+            value="{{ old('last_name') ?? $employee->last_name }}">
+        @if ($errors->has('last_name'))
+            <div class="alert alert-danger">
+                <p>{{ $errors->first('last_name') }}</p>
+            </div>
+        @endif
+
         <label class="form-label" for="company_id">{{ __('employees.employer') }}</label>
         <select class="form-control" name="company_id">
             <option @if (!$employee->company)
@@ -37,12 +49,29 @@
                 </option>
             @endforeach
         </select>
+        @if ($errors->has('company_id'))
+            <div class="alert alert-danger">
+                <p>{{ $errors->first('company_id') }}</p>
+            </div>
+        @endif
 
         <label class="form-label" for="email">{{ __('employees.email') }}</label>
-        <input class="form-control" type="email" name="email" id="email" value="{{ $employee->email }}">
+        <input class="form-control" type="email" name="email" id="email"
+            value="{{ old('email') ?? $employee->email }}">
+        @if ($errors->has('email'))
+            <div class="alert alert-danger">
+                <p>{{ $errors->first('email') }}</p>
+            </div>
+        @endif
 
         <label class="form-label" for="phone">{{ __('employees.phone') }}</label>
-        <input class="form-control" type="tel" name="phone" id="phone" value="{{ $employee->phone }}">
+        <input class="form-control" type="tel" name="phone" id="phone"
+            value="{{ old('phone') ?? $employee->phone }}">
+        @if ($errors->has('phone'))
+            <div class="alert alert-danger">
+                <p>{{ $errors->first('phone') }}</p>
+            </div>
+        @endif
 
         <button class="btn btn-primary" type="submit">{{ __('employees.editSubmit') }}</button>
     </form>

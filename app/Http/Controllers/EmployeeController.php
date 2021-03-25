@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -70,7 +71,17 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        dd($request);
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'company_id' => 'nullable|exists:companies,id',
+            'email' => 'nullable|email',
+            'phone' => ['nullable', new PhoneNumber()],
+        ]);
+
+        // TODO: some code to actually update the Employee model
+        
+        // dd($request);
         return "Update employee {$employee->first_name} {$employee->last_name}.";
     }
 
