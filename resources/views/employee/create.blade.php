@@ -5,25 +5,21 @@
 <div class="row justify-content-center">
 <div class="col-md-8">
 <div class="card">
-    @component('employee.cardHeader', [
-        'employee' => $employee,
-        'isShowActive' => false,
-        'isEditActive' => true,
-    ])
-    @endcomponent
+<div class="card-header">
+    {{ __('employees.createTitle') }}
+</div>
 <div class="card-body">
     @component('components.flashStatus')@endcomponent
     
-    <form action="{{ route('employee.update', $employee->id) }}" method="post">
+    <form action="{{ route('employee.store') }}" method="post">
         @csrf
-        @method('PUT')
+        @method('POST')
 
         @component('employee.formContents', [
-            'employee' => $employee,
-            'errors' => $errors,
+            'errors' => $errors
         ])@endcomponent
 
-        <button class="btn btn-primary" type="submit">{{ __('employees.editSubmit') }}</button>
+        <button class="btn btn-primary" type="submit">{{ __('employees.createSubmit') }}</button>
     </form>
 </div>
 <div class="card-footer"><a href="{{ route('employee.all') }}">{{ __('employees.showAll') }}</a></div>

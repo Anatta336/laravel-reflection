@@ -14,7 +14,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -24,7 +24,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -35,7 +35,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -46,7 +46,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -57,7 +57,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -69,7 +69,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        // TODO: implement me
     }
 
     /**
@@ -80,6 +80,6 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        // TODO: implement me
     }
 }

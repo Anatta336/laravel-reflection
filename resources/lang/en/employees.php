@@ -15,5 +15,7 @@ return [
     'showAll' => 'Show all employees',
     'firstName' => 'First Name',
     'lastName' => 'Last Name',
-    'editSubmit' => 'Submit',
+    'editSubmit' => 'Save',
+    'createTitle' => 'Create Employee',
+    'createSubmit' => 'Create',
 ];

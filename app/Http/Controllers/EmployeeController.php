@@ -26,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return 'Form for creating a new employee.';
+        return view('employee.create');
     }
 
     /**
@@ -37,7 +37,23 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Store a new employee.';
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'company_id' => 'nullable|exists:companies,id',
+            'email' => 'nullable|email',
+            'phone' => ['nullable', new PhoneNumber()],
+        ]);
+
+        $employee = new Employee($validated);
+        $employee->save();
+
+        return redirect()
+            ->route('employee.show', ['employee' => $employee])
+            ->with('message', [
+                'alert-type' => 'success',
+                'content' => 'Employee created.',
+            ]);
     }
 
     /**
@@ -97,6 +113,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        // TODO: implement me
         return "Delete employee {$employee->first_name} {$employee->last_name}.";
     }
 }
