@@ -5,4 +5,12 @@ return [
     'show' => 'View',
     'edit' => 'Edit',
     'destroy' => 'Delete',
+    'showSingleTitle' => 'View Employee',
+    'name' => 'Name',
+    'employer' => 'Employer',
+    'noEmployer' => 'None',
+    'viewEmployer' => 'View Company',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'showAll' => 'Show all employees',
 ];
