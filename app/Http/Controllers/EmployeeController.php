@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::orderBy('last_name')->paginate(10);
         return view('employee.list', ['employees' => $employees]);
     }
 
@@ -47,7 +47,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return "Show employee {$employee->first_name} {$employee->last_name}.";
+        return view('employee.show', ['employee' => $employee]);
     }
 
     /**
