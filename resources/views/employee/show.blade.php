@@ -12,6 +12,8 @@
 ])
 @endcomponent
 <div class="card-body">
+    @component('components.flashStatus')@endcomponent
+    
     <p>{{ __('employees.name') }}: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
     <p>
         {{ __('employees.employer') }}:

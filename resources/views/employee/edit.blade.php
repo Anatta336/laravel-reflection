@@ -12,6 +12,8 @@
     ])
     @endcomponent
 <div class="card-body">
+    @component('components.flashStatus')@endcomponent
+    
     <form action="{{ route('employee.update', $employee->id) }}" method="post">
         @csrf
         @method('PUT')

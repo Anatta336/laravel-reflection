@@ -79,10 +79,14 @@ class EmployeeController extends Controller
             'phone' => ['nullable', new PhoneNumber()],
         ]);
 
-        // TODO: some code to actually update the Employee model
-        
-        // dd($request);
-        return "Update employee {$employee->first_name} {$employee->last_name}.";
+        $employee->update($validated);
+
+        return redirect()
+            ->route('employee.show', ['employee' => $employee])
+            ->with('message', [
+                'alert-type' => 'success',
+                'content' => 'Employee updated.',
+            ]);
     }
 
     /**
