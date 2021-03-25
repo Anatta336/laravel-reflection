@@ -7,6 +7,8 @@
 <div class="card">
 <div class="card-header">{{ __('employees.listTitle') }}</div>
 <div class="card-body">
+
+    {{-- table of employee names --}}
     <table class="table table-striped">
     @foreach ($employees as $employee)
         <tr>
@@ -38,6 +40,10 @@
         </tr>
     @endforeach
     </table>
+
+    {{-- pagination --}}
+    {{ $employees->links() }}
+
 </div>
 </div>
 </div>
