@@ -13,4 +13,7 @@ return [
     'email' => 'Email',
     'phone' => 'Phone',
     'showAll' => 'Show all employees',
+    'firstName' => 'First Name',
+    'lastName' => 'Last Name',
+    'editSubmit' => 'Submit',
 ];
