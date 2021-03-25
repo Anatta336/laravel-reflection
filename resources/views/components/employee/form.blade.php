@@ -1,10 +1,11 @@
 <label class="form-label" for="first_name">{{ __('employees.firstName') }}</label>
 <input class="form-control" type="text" name="first_name" id="first_name" required
-    value="@if (old('_token'))
-{{ old('first_name') }}
+    @if (old('_token'))
+        value="{{ old('first_name') }}"
     @elseif (isset($employee))
-{{ $employee->first_name }}
-    @endif">
+        value="{{ $employee->first_name }}"
+    @endif
+    >
 @if ($errors->has('first_name'))
     <div class="alert alert-danger">
         <p>{{ $errors->first('first_name') }}</p>
@@ -13,11 +14,12 @@
 
 <label class="form-label" for="last_name">{{ __('employees.lastName') }}</label>
 <input class="form-control" type="text" name="last_name" id="last_name" required
-    value="@if (old('_token'))
-{{ old('last_name') }}
+    @if (old('_token'))
+        value="{{ old('last_name') }}"
     @elseif (isset($employee))
-{{ $employee->last_name }}
-    @endif">
+        value="{{ $employee->last_name }}"
+    @endif
+    >
 @if ($errors->has('last_name'))
     <div class="alert alert-danger">
         <p>{{ $errors->first('last_name') }}</p>
@@ -53,11 +55,12 @@
 
 <label class="form-label" for="email">{{ __('employees.email') }}</label>
 <input class="form-control" type="email" name="email" id="email"
-    value="@if (old('_token'))
-{{ old('email') }}
+    @if (old('_token'))
+        value="{{ old('email') }}"
     @elseif (isset($employee))
-{{ $employee->email }}
-    @endif">
+        value="{{ $employee->email }}"
+    @endif
+    >
 @if ($errors->has('email'))
     <div class="alert alert-danger">
         <p>{{ $errors->first('email') }}</p>
@@ -66,11 +69,12 @@
 
 <label class="form-label" for="phone">{{ __('employees.phone') }}</label>
 <input class="form-control" type="tel" name="phone" id="phone"
-    value="@if (old('_token'))
-{{ old('phone') }}
+    @if (old('_token'))
+        value="{{ old('phone') }}"
     @elseif (isset($employee))
-{{ $employee->phone }}
-    @endif">
+        value="{{ $employee->phone }}"
+    @endif
+    >
 @if ($errors->has('phone'))
     <div class="alert alert-danger">
         <p>{{ $errors->first('phone') }}</p>
