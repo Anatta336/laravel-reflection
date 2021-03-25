@@ -5,29 +5,13 @@
 <div class="row justify-content-center">
 <div class="col-md-8">
 <div class="card">
-<div class="card-header">
-    <ul class="nav nav-pills card-header-pills">
-        <li class="nav-item">
-          <a class="nav-link active" href="#"> {{ __('employees.showSingleTitle') }}</a>
-        </li>
-        @if (Auth::check())
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('employee.edit', $employee->id) }}">{{ __('employees.edit') }}</a>
-            </li>
-            <li class="nav-item">
-                <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        {{ __('employees.destroy') }}
-                    </button>
-                </form>
-            </li>
-        @endif
-      </ul>
-</div>
+@component('employee.cardHeader', [
+    'employee' => $employee,
+    'isShowActive' => true,
+    'isEditActive' => false,
+])
+@endcomponent
 <div class="card-body">
-
     <p>{{ __('employees.name') }}: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
     <p>
         {{ __('employees.employer') }}:
