@@ -24,7 +24,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return 'Form for creating a new employee.';
     }
 
     /**
@@ -35,7 +35,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'Store a new employee.';
     }
 
     /**
@@ -46,7 +46,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return "Show employee {$employee->first_name} {$employee->last_name}.";
     }
 
     /**
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return "Edit employee {$employee->first_name} {$employee->last_name}.";
     }
 
     /**
@@ -69,7 +69,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        return "Update employee {$employee->first_name} {$employee->last_name}.";
     }
 
     /**
@@ -80,6 +80,6 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        return "Delete employee {$employee->first_name} {$employee->last_name}.";
     }
 }

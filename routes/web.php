@@ -14,10 +14,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/employee/all', 'EmployeeController@index')->name('employee.all');
-Route::get('/employee/{id}', 'EmployeeController@show')->name('employee.show');
-Route::get('/employee/{id}/edit', 'EmployeeController@edit')->name('employee.edit');
-Route::delete('/employee/{id}', 'EmployeeController@destroy')->name('employee.destroy');
-Route::put('/employee/{id}', 'EmployeeController@create')->name('employee.create');
+Route::get('/employee/{employee}', 'EmployeeController@show')->name('employee.show');
+Route::get('/employee/{employee}/edit', 'EmployeeController@edit')->name('employee.edit')->middleware('auth');
+Route::delete('/employee/{employee}', 'EmployeeController@destroy')->name('employee.destroy')->middleware('auth');
+Route::put('/employee/{employee}', 'EmployeeController@create')->name('employee.create')->middleware('auth');
 
 // use all the Auth routes, but disable registering new users
 // Auth::routes();

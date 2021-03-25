@@ -18,20 +18,23 @@
                     {{ __('employees.show') }}
                 </a>
             </td>
-            <td class="edit">
-                <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-                    {{ __('employees.edit') }}
-                </a>
-            </td>
-            <td class="delete">
-                <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-link">
-                        {{ __('employees.destroy') }}
-                    </button>
-                </form>
-            </td>
+            {{-- only show edit and delete if user is logged in --}}
+            @if (Auth::check())
+                <td class="edit">
+                    <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
+                        {{ __('employees.edit') }}
+                    </a>
+                </td>
+                <td class="delete">
+                    <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link">
+                            {{ __('employees.destroy') }}
+                        </button>
+                    </form>
+                </td>
+            @endif
         </tr>
     @endforeach
     </table>
