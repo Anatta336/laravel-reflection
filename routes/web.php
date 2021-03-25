@@ -21,6 +21,8 @@ Route::get('/employee/{employee}', 'EmployeeController@show')
     ->name('employee.show');
 Route::get('/employee/{employee}/edit', 'EmployeeController@edit')
     ->name('employee.edit')->middleware('auth');
+Route::put('/employee/{employee}/edit', 'EmployeeController@update')
+    ->name('employee.update')->middleware('auth');
 Route::delete('/employee/{employee}', 'EmployeeController@destroy')
     ->name('employee.destroy')->middleware('auth');
 Route::put('/employee/{employee}', 'EmployeeController@create')

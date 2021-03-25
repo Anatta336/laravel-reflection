@@ -58,7 +58,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return "Edit employee {$employee->first_name} {$employee->last_name}.";
+        return view('employee.edit', ['employee' => $employee]);
     }
 
     /**
@@ -70,6 +70,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        dd($request);
         return "Update employee {$employee->first_name} {$employee->last_name}.";
     }
 
