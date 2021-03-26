@@ -113,7 +113,21 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        // TODO: implement me
-        return "Delete employee {$employee->first_name} {$employee->last_name}.";
+        if (!$employee) {
+            return back()->with('message', [
+                'alert-type' => 'danger',
+                'content' => "Failed to delete. Unable to find employee.",
+            ]);
+        }
+
+        $name = "{$employee->first_name} {$employee->last_name}";
+        $employee->delete();
+
+        return redirect()
+            ->route('employee.all')
+            ->with('message', [
+                'alert-type' => 'success',
+                'content' => "Deleted employee: $name",
+        ]);
     }
 }

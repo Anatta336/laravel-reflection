@@ -5,49 +5,56 @@
 <div class="row justify-content-center">
 <div class="col-md-8">
 <div class="card">
-<div class="card-header">{{ __('employees.listTitle') }}</div>
+<div class="card-header">Employees</div>
 <div class="card-body">
+    @component('components.flashStatus')
+    @endcomponent
 
     {{-- table of employee names --}}
     <table class="table table-striped">
     @foreach ($employees as $employee)
-        <tr>
+        <tr class="employee">
             <td class="name">
                 {{ $employee->first_name }} {{ $employee->last_name }}
             </td>
             <td class="show">
                 <a class="btn btn-link" href="{{ route('employee.show', $employee->id) }}">
-                    {{ __('employees.show') }}
+                    View
                 </a>
             </td>
             
             <td>
                 @if (Auth::check())
-                <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-                    {{ __('employees.edit') }}
-                </a>
+                    <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
+                        Edit
+                    </a>
                 @else
-                <a class="btn btn-link disabled" href="">
-                    {{ __('employees.edit') }}
-                </a>
+                    <a class="btn btn-link disabled" href="">
+                        Edit
+                    </a>
                 @endif
             </td>
             <td>
                 @if (Auth::check())
-                <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-link">
-                        {{ __('employees.destroy') }}
-                    </button>
-                </form>
-                @else
-                <form method="" action="">
-                    <button type="submit" class="btn btn-link disabled">
-                        {{ __('employees.destroy') }}
-                    </button>
-                </form>
+                    <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        {{-- <input type="hidden" name="id" value="{{ $employee->id }}"> --}}
+                        <button type="submit" class="btn btn-danger delete-employee"
+                            data-employee-name="{{ $employee->first_name . ' ' . $employee->last_name }}">
+                            Delete
+                        </button>
+                    </form>
 
+                    {{-- <button type="button" class="btn btn-link delete-employee"
+                        data-employee-id="{{ $employee->id }}"
+                        data-employee-name="{{ $employee->first_name . ' ' . $employee->last_name }}">
+                        Delete
+                    </button> --}}
+                @else
+                    <button type="button" class="btn btn-link disabled">
+                        Delete
+                    </button>
                 @endif
             </td>
         </tr>
@@ -62,4 +69,8 @@
 </div>
 </div>
 </div>
+
+@component('components.deletionModal')
+@endcomponent
+
 @endsection

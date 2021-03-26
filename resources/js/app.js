@@ -5,6 +5,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+const { confirmDelete } = require('./confirmDelete');
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -31,3 +33,31 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app'
 });
+
+/*
+ * Handle custom deletion confirmation modal. 
+ */
+require('./confirmDelete');
+
+(function initConfirmDeleteForEmployees() {
+  const deleteButtons = document.querySelectorAll('.delete-employee');
+  if (!deleteButtons) {
+    // cannot proceed without buttons to trigger deletion
+    return;
+  }
+
+  if (!document.querySelector('#delete-modal')) {
+    // cannot proceed without a #delete-modal set up on the page
+    return;
+  }
+
+  deleteButtons.forEach(button => {
+    const name = button.getAttribute('data-employee-name');
+    if (name === null || name === '') {
+      return;
+    }
+
+    confirmDelete(button, `Are you sure you want to delete the employee ${name}?`);
+  });
+
+}) ();
