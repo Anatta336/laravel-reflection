@@ -58,6 +58,12 @@
     {{ $employees->links() }}
 
 </div>
+
+<div class="card-footer">
+    @component('components.employee.createButton')
+    @endcomponent
+</div>
+
 </div>
 </div>
 </div>
