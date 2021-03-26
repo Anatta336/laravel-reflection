@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Requests\UpdateCompany;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -64,16 +65,13 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateCompany  $request
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(UpdateCompany $request, Company $company)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'logo-file' => 'nullable|dimensions:min_width=100,min_height=100',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('logo-file')) {
             $file = $request->file('logo-file');
