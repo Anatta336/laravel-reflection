@@ -1,5 +1,5 @@
 @extends('layouts.employee', [
-    'header' => __('employees.createTitle'),
+    'header' => 'Create Employee',
     'hideCreateButton' => true, // user might think this "create" link will use current form values
 ])
 
@@ -12,6 +12,6 @@
         'errors' => $errors
     ])@endcomponent
 
-    <button class="btn btn-primary" type="submit">{{ __('employees.createSubmit') }}</button>
+    <button class="btn btn-primary" type="submit">Create</button>
 </form>
 @endsection

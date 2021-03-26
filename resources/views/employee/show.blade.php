@@ -1,18 +1,20 @@
 @extends('layouts.employee', [
     'employee' => $employee,
-    'header' => __('employees.showTitle'),
+    'header' => 'View Employee',
 ])
 
 @section('employeeContent')
-<p>{{ __('employees.name') }}: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
+<p>Name: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
 <p>
-    {{ __('employees.employer') }}:
+    Employer: 
     @if ($employee->company)
-    <a href="{{ route('company.show', $employee->company->id) }}"><strong>{{ $employee->company->name }}</strong></a>
+        <a href="{{ route('company.show', $employee->company->id) }}">
+            <strong>{{ $employee->company->name }}</strong>
+        </a>
     @else
-        {{ __('employees.noEmployer') }}
+        <strong>None</strong>
     @endif
 </p>
-<p>{{ __('employees.email') }}: <strong>{{ $employee->email }}</strong></p>
-<p>{{ __('employees.phone') }}: <strong>{{ $employee->phone }}</strong></p>
+<p>Email address: <strong>{{ $employee->email }}</strong></p>
+<p>Phone number: <strong>{{ $employee->phone }}</strong></p>
 @endsection

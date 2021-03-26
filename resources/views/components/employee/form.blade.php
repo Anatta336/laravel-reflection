@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="form-label" for="first_name">{{ __('employees.firstName') }}</label>
+    <label class="form-label" for="first_name">First name:</label>
     <input class="form-control" type="text" name="first_name" id="first_name" required
         @if (old('_token'))
             value="{{ old('first_name') }}"
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <label class="form-label" for="last_name">{{ __('employees.lastName') }}</label>
+    <label class="form-label" for="last_name">Last name:</label>
     <input class="form-control" type="text" name="last_name" id="last_name" required
         @if (old('_token'))
             value="{{ old('last_name') }}"
@@ -29,7 +29,7 @@
 </div>
 
 <div class="form-group">
-    <label class="form-label" for="company_id">{{ __('employees.employer') }}</label>
+    <label class="form-label" for="company_id">Employer</label>
     <select class="form-control" name="company_id">
         {{--
             if has data from last submission and old company_id is null, then it must be intentionally
@@ -39,7 +39,7 @@
                 || (isset($employee) && !$employee->company))
             selected
             @endif value="">
-            {{ __('employees.noEmployer') }}
+            None
         </option>
         @foreach (App\Company::all()->sortBy('name') as $company)
             <option @if (old('company_id') == $company->id
@@ -58,7 +58,7 @@
 </div>
 
 <div class="form-group">
-    <label class="form-label" for="email">{{ __('employees.email') }}</label>
+    <label class="form-label" for="email">Email address</label>
     <input class="form-control" type="email" name="email" id="email"
         @if (old('_token'))
             value="{{ old('email') }}"
@@ -72,7 +72,7 @@
         </div>
     @endif
 
-    <label class="form-label" for="phone">{{ __('employees.phone') }}</label>
+    <label class="form-label" for="phone">Phone number</label>
     <input class="form-control" type="tel" name="phone" id="phone"
         @if (old('_token'))
             value="{{ old('phone') }}"

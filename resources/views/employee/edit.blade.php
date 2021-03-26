@@ -1,6 +1,6 @@
 @extends('layouts.employee', [
     'employee' => $employee,
-    'header' => __('employees.editTitle'),
+    'header' => 'Edit Employee',
 ])
 
 @section('employeeContent')
@@ -13,6 +13,6 @@
         'errors' => $errors,
     ])@endcomponent
 
-    <button class="btn btn-primary" type="submit">{{ __('employees.editSubmit') }}</button>
+    <button class="btn btn-primary" type="submit">Save</button>
 </form>
 @endsection
