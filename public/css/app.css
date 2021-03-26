@@ -10942,6 +10942,10 @@ a.text-dark:focus {
   }
 }
 
+.company .inline {
+  display: inline;
+}
+
 #delete-modal .inline {
   display: inline;
 }

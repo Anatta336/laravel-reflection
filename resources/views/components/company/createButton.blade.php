@@ -1,5 +1,5 @@
 @if (Auth::check())
-    <a class="btn btn-link" href="{{ route('employee.create') }}">
+    <a class="btn btn-link" href="{{ route('company.create') }}">
         Create New
     </a>
 @else
