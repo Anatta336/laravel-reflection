@@ -27,7 +27,7 @@
 
 <p>Logo:
     @if ($company->logo)
-        <img class="logo" src="{{ asset('storage/' . $company->logo) }}" alt="Logo of {{ $company->name }}">
+        <img class="img-fluid logo" src="{{ asset('storage/' . $company->logo) }}" alt="Logo of {{ $company->name }}">
     @else
         <strong>None</strong>
     @endif
