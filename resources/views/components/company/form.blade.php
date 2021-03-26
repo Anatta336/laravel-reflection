@@ -9,7 +9,7 @@
         >
     @if ($errors->has('name'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('name') }}</p>
+            {{ $errors->first('name') }}
         </div>
     @endif
 </div>
@@ -18,7 +18,7 @@
     <input type="file" name="logo-file" id="logo-file">
     @if ($errors->has('logo-file'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('logo-file') }}</p>
+            {{ $errors->first('logo-file') }}
         </div>
     @endif
 </div>
@@ -34,7 +34,7 @@
         >
     @if ($errors->has('email'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('email') }}</p>
+            {{ $errors->first('email') }}
         </div>
     @endif
 
@@ -48,7 +48,7 @@
         >
     @if ($errors->has('website'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('website') }}</p>
+            {{ $errors->first('website') }}
         </div>
     @endif
 </div>

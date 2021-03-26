@@ -9,7 +9,7 @@
         >
     @if ($errors->has('first_name'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('first_name') }}</p>
+            {{ $errors->first('first_name') }}
         </div>
     @endif
 
@@ -23,7 +23,7 @@
         >
     @if ($errors->has('last_name'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('last_name') }}</p>
+            {{ $errors->first('last_name') }}
         </div>
     @endif
 </div>
@@ -52,7 +52,7 @@
     </select>
     @if ($errors->has('company_id'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('company_id') }}</p>
+            {{ $errors->first('company_id') }}
         </div>
     @endif
 </div>
@@ -68,7 +68,7 @@
         >
     @if ($errors->has('email'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('email') }}</p>
+            {{ $errors->first('email') }}
         </div>
     @endif
 
@@ -82,7 +82,7 @@
         >
     @if ($errors->has('phone'))
         <div class="alert alert-danger">
-            <p>{{ $errors->first('phone') }}</p>
+            {{ $errors->first('phone') }}
         </div>
     @endif
 </div>
