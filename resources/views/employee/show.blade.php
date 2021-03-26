@@ -15,6 +15,16 @@
         <strong>None</strong>
     @endif
 </p>
-<p>Email address: <strong>{{ $employee->email }}</strong></p>
+
+<p>Email address:
+    @if ($employee->email)
+        <strong><a href="mailto:{{ $employee->email }}">
+            {{ $employee->email }}
+        </a></strong>
+    @else
+        <strong>None</strong>
+    @endif
+</p>
+
 <p>Phone number: <strong>{{ $employee->phone }}</strong></p>
 @endsection
