@@ -20,23 +20,36 @@
                     {{ __('employees.show') }}
                 </a>
             </td>
-            {{-- only show edit and delete if user is logged in --}}
-            @if (Auth::check())
-                <td class="edit">
-                    <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-                        {{ __('employees.edit') }}
-                    </a>
-                </td>
-                <td class="delete">
-                    <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-link">
-                            {{ __('employees.destroy') }}
-                        </button>
-                    </form>
-                </td>
-            @endif
+            
+            <td>
+                @if (Auth::check())
+                <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
+                    {{ __('employees.edit') }}
+                </a>
+                @else
+                <a class="btn btn-link disabled" href="">
+                    {{ __('employees.edit') }}
+                </a>
+                @endif
+            </td>
+            <td>
+                @if (Auth::check())
+                <form method="POST" action="{{ route('employee.destroy', $employee->id) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-link">
+                        {{ __('employees.destroy') }}
+                    </button>
+                </form>
+                @else
+                <form method="" action="">
+                    <button type="submit" class="btn btn-link disabled">
+                        {{ __('employees.destroy') }}
+                    </button>
+                </form>
+
+                @endif
+            </td>
         </tr>
     @endforeach
     </table>
