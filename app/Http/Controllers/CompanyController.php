@@ -58,7 +58,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        // TODO: implement me
+        return view('company.edit', ['company' => $company]);
     }
 
     /**
@@ -70,7 +70,20 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        // TODO: implement me
+        $validated = $request->validate([
+            'name' => 'required',
+            'logo-file' => 'nullable|dimensions:min_width=100,min_height=100',
+        ]);
+
+        if ($request->hasFile('logo-file')) {
+            $file = $request->file('logo-file');
+            $validated['logo'] = $file->storePublicly('logos', 'public');
+        }
+
+        unset($validated['logo-file']);
+        $company->update($validated);
+
+        return view('company.show', ['company' => $company]);
     }
 
     /**

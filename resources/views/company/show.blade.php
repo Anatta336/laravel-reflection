@@ -25,6 +25,12 @@
     @endif
 </p>
 
-<p>Logo: <strong>notYetImplemented.jpg</strong></p>
+<p>Logo:
+    @if ($company->logo)
+        <img class="logo" src="{{ asset('storage/' . $company->logo) }}" alt="Logo of {{ $company->name }}">
+    @else
+        <strong>None</strong>
+    @endif
+</p>
 
 @endsection

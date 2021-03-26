@@ -49,8 +49,8 @@ Route::get('/company/view/{company}', 'CompanyController@show')
 
 Route::get('/company/edit/{company}', 'CompanyController@edit')
     ->name('company.edit')->middleware('auth');
-Route::put('/company/edit/{company}', 'CompanyController@update')
-    ->name('company.edit')->middleware('auth');
+Route::patch('/company/edit/{company}', 'CompanyController@update')
+    ->name('company.update')->middleware('auth');
 
 Route::delete('/company/delete/{company}', 'CompanyController@destroy')
     ->name('company.destroy')->middleware('auth');
