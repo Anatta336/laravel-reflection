@@ -19,4 +19,8 @@
 </div>
 </div>
 </div>
+
+@component('components.deletionModal')
+@endcomponent
+
 @endsection
