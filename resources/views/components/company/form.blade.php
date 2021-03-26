@@ -16,6 +16,11 @@
 
 <div class="form-group">
     <input type="file" name="logo-file" id="logo-file">
+    @if ($errors->has('logo-file'))
+        <div class="alert alert-danger">
+            <p>{{ $errors->first('logo-file') }}</p>
+        </div>
+    @endif
 </div>
 
 <div class="form-group">
