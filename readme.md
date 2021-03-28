@@ -12,6 +12,11 @@ php artisan serve
 
 Access at http://localhost:8000/
 
+## Example user accounts
+* `admin@example.com` `password` - Full rights.
+* `manager@example.com` `password` - Create, view, edit, delete employees. Can view companies.
+* `accountant@example.com` `password`- Only view.
+
 ## SQlite CLI
 
 powershell:
