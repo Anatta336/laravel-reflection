@@ -47,7 +47,7 @@ require('./confirmDelete');
   }
 
   if (!document.querySelector('#delete-modal')) {
-    // cannot proceed without a #delete-modal set up on the page
+    // cannot proceed without a #delete-modal available on the page
     return;
   }
 
@@ -59,5 +59,28 @@ require('./confirmDelete');
 
     confirmDelete(button, `Are you sure you want to delete the employee ${name}?`);
   });
-
 }) ();
+
+(function initConfirmDeleteForCompanies() {
+  const deleteButtons = document.querySelectorAll('.delete-company');
+  if (!deleteButtons) {
+    // cannot proceed without buttons to trigger deletion
+    return;
+  }
+
+  if (!document.querySelector('#delete-modal')) {
+    // cannot proceed without a #delete-modal available on the page
+    return;
+  }
+
+  deleteButtons.forEach(button => {
+    const name = button.getAttribute('data-company-name');
+    if (name === null || name === '') {
+      return;
+    }
+
+    confirmDelete(button, `Are you sure you want to delete the company ${name}?`);
+  });
+}) ();
+
+//TODO: above blocks are very similar, any reason not to combine them?

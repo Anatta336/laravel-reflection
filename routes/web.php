@@ -57,7 +57,7 @@ Route::delete('/company/delete/{company}', 'CompanyController@destroy')
 
 Route::get('/company/add', 'CompanyController@create')
     ->name('company.create')->middleware('auth');
-Route::put('/company/add', 'CompanyController@store')
+Route::post('/company/add', 'CompanyController@store')
     ->name('company.store')->middleware('auth');
 
 // add Auth routes, but set option to disable registering new users

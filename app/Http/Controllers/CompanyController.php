@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Requests\CreateCompany;
 use App\Http\Requests\UpdateCompany;
 use Illuminate\Http\Request;
 
@@ -26,18 +27,35 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        // TODO: implement me
+        return view('company.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateCompany  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCompany $request)
     {
-        // TODO: implement me
+        $validated = $request->validated();
+
+        if ($request->hasFile('logo-file')) {
+            $file = $request->file('logo-file');
+            $validated['logo'] = $file->storePublicly('logos', 'public');
+        }
+
+        unset($validated['logo-file']);
+        $company = new Company($validated);
+        $company->save();
+
+        // dd($company);
+
+        return view('company.show', ['company' => $company])
+            ->with('message', [
+                'alert-type' => 'success',
+                'content' => "Created new company: {$company->name}", 
+        ]);
     }
 
     /**
@@ -81,7 +99,10 @@ class CompanyController extends Controller
         unset($validated['logo-file']);
         $company->update($validated);
 
-        return view('company.show', ['company' => $company]);
+        return view('company.show', ['company' => $company])->with('message', [
+            'alert-type' => 'success',
+            'content' => "Updated company: {$company->name}", 
+        ]);
     }
 
     /**
@@ -92,6 +113,21 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        // TODO: implement me
+        if (!$company) {
+            return back()->with('message', [
+                'alert-type' => 'danger',
+                'content' => "Failed to delete. Unable to find company.",
+            ]);
+        }
+
+        $name = $company->name;
+        $company->delete();
+
+        return redirect()
+            ->route('company.all')
+            ->with('message', [
+                'alert-type' => 'success',
+                'content' => "Deleted company: $name",
+        ]);
     }
 }

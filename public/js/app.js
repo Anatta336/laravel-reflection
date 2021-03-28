@@ -49887,7 +49887,7 @@ __webpack_require__(/*! ./confirmDelete */ "./resources/js/confirmDelete.js");
   }
 
   if (!document.querySelector('#delete-modal')) {
-    // cannot proceed without a #delete-modal set up on the page
+    // cannot proceed without a #delete-modal available on the page
     return;
   }
 
@@ -49901,6 +49901,30 @@ __webpack_require__(/*! ./confirmDelete */ "./resources/js/confirmDelete.js");
     confirmDelete(button, "Are you sure you want to delete the employee ".concat(name, "?"));
   });
 })();
+
+(function initConfirmDeleteForCompanies() {
+  var deleteButtons = document.querySelectorAll('.delete-company');
+
+  if (!deleteButtons) {
+    // cannot proceed without buttons to trigger deletion
+    return;
+  }
+
+  if (!document.querySelector('#delete-modal')) {
+    // cannot proceed without a #delete-modal available on the page
+    return;
+  }
+
+  deleteButtons.forEach(function (button) {
+    var name = button.getAttribute('data-company-name');
+
+    if (name === null || name === '') {
+      return;
+    }
+
+    confirmDelete(button, "Are you sure you want to delete the company ".concat(name, "?"));
+  });
+})(); //TODO: above blocks are very similar, any reason not to combine them?
 
 /***/ }),
 

@@ -23,7 +23,8 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
             
             $table->foreign('company_id')
-                ->references('id')->on('companies');
+                ->references('id')->on('companies')
+                ->onDelete('set null');
         });
     }
 
