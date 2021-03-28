@@ -18,24 +18,26 @@
                 {{ $employee->first_name }} {{ $employee->last_name }}
             </td>
             <td class="show">
+                @if (Auth::user()->can('view', $employee))
                 <a class="btn btn-link" href="{{ route('employee.show', $employee->id) }}">
+                @else
+                <a class="btn btn-link disabled" href="">
+                @endif
                     View
                 </a>
             </td>
             
             <td>
-                @if (Auth::check())
-                    <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-                        Edit
-                    </a>
+                @if (Auth::user()->can('update', $employee))
+                <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
                 @else
-                    <a class="btn btn-link disabled" href="">
-                        Edit
-                    </a>
+                <a class="btn btn-link disabled" href="">
                 @endif
+                    Edit
+                </a>
             </td>
             <td>
-                @if (Auth::check())
+                @if (Auth::user()->can('delete', $employee))
                     <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
                         @csrf
                         @method('DELETE')

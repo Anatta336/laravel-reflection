@@ -13,31 +13,31 @@
     @yield('employeeContent')
 </div>
 <div class="card-footer">
+    @if (Auth::user()->can('view', App\Employee::class))
     <a class="btn btn-link" href="{{ route('employee.all') }}">
-        Show all employees
+    @else
+    <a class="btn btn-link disabled" href="">
+    @endif
+    Show all employees
     </a>
     
-    @if (isset($employee))
-        <a class="btn btn-link" href="{{ route('employee.show', $employee->id) }}">
-            View
-        </a>
+    @if (isset($employee) && Auth::user()->can('view', $employee))
+    <a class="btn btn-link" href="{{ route('employee.show', $employee->id) }}">
     @else
-        <a class="btn btn-link disabled" href="">
-            View
-        </a>
+    <a class="btn btn-link disabled" href="">
     @endif
+        View
+    </a>
 
-    @if (Auth::check() && isset($employee))
-        <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-            Edit
-        </a>
+    @if (isset($employee) && Auth::user()->can('update', $employee))
+    <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
     @else
-        <a class="btn btn-link disabled" href="">
-            Edit
-        </a>
+    <a class="btn btn-link disabled" href="">
     @endif
+        Edit
+    </a>
     
-    @if (Auth::check() && isset($employee))
+    @if (isset($employee) && Auth::user()->can('delete', $employee))
         <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
             @csrf
             @method('DELETE')

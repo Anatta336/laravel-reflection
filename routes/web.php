@@ -17,27 +17,34 @@ Route::get('/', 'HomeController@index')
 // -- Employee routes
 // list all
 Route::get('/employee/all', 'EmployeeController@index')
-    ->name('employee.all');
+    ->name('employee.all')
+    ->middleware('can:view,App\Employee');
 
 // show individual
 Route::get('/employee/view/{employee}', 'EmployeeController@show')
-    ->name('employee.show');
+    ->name('employee.show')
+    ->middleware('can:view,employee');
 
 // edit existing
 Route::get('/employee/edit/{employee}', 'EmployeeController@edit')
-    ->name('employee.edit')->middleware('auth');
+    ->name('employee.edit')
+    ->middleware('can:update,employee');
 Route::put('/employee/edit/{employee}', 'EmployeeController@update')
-    ->name('employee.update')->middleware('auth');
+    ->name('employee.update')
+    ->middleware('can:update,employee');
 
 // delete existing
 Route::delete('/employee/delete/{employee}', 'EmployeeController@destroy')
-    ->name('employee.destroy')->middleware('auth');
+    ->name('employee.destroy')
+    ->middleware('can:delete,employee');
 
 // add new
 Route::get('/employee/add', 'EmployeeController@create')
-    ->name('employee.create')->middleware('auth');
+    ->name('employee.create')
+    ->middleware('can:create,employee');
 Route::post('/employee/add', 'EmployeeController@store')
-    ->name('employee.store')->middleware('auth');
+    ->name('employee.store')
+    ->middleware('can:create,employee');
 
 // -- Company routes
 Route::get('/company/all', 'CompanyController@index')
