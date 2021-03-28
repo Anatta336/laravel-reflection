@@ -18,24 +18,26 @@
                 {{ $company->name }}
             </td>
             <td class="show">
+                @if (Auth::user()->can('view', $company))
                 <a class="btn btn-link" href="{{ route('company.show', $company->id) }}">
+                @else
+                <a class="btn btn-link disabled" href="">
+                @endif
                     View
                 </a>
             </td>
             
             <td>
-                @if (Auth::check())
-                    <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
-                        Edit
-                    </a>
+                @if (Auth::user()->can('update', $company))
+                <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
                 @else
-                    <a class="btn btn-link disabled" href="">
-                        Edit
-                    </a>
+                <a class="btn btn-link disabled" href="">
                 @endif
+                    Edit
+                </a>
             </td>
             <td>
-                @if (Auth::check())
+                @if (Auth::user()->can('delete', $company))
                     <form class="inline" method="POST" action="{{ route('company.destroy', $company->id) }}">
                         @csrf
                         @method('DELETE')

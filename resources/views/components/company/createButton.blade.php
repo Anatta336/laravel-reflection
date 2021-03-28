@@ -1,9 +1,7 @@
-@if (Auth::check())
-    <a class="btn btn-link" href="{{ route('company.create') }}">
-        Create New
-    </a>
+@if (Auth::user()->can('create', App\Company::class))
+<a class="btn btn-link" href="{{ route('company.create') }}">
 @else
-    <a class="btn btn-link disabled" href="">
-        Create New
-    </a>
+<a class="btn btn-link disabled" href="">
 @endif
+    Create New
+</a>

@@ -13,45 +13,45 @@
     @yield('companyContent')
 </div>
 <div class="card-footer">
+    @if (Auth::user()->can('view', App\Company::class))
     <a class="btn btn-link" href="{{ route('company.all') }}">
+    @else
+    <a class="btn btn-link disabled" href="">
+    @endif
         Show all companies
     </a>
     
-    @if (isset($company))
-        <a class="btn btn-link" href="{{ route('company.show', $company->id) }}">
-            View
-        </a>
+    @if (isset($company) && Auth::user()->can('view', $company))
+    <a class="btn btn-link" href="{{ route('company.show', $company->id) }}">
     @else
-        <a class="btn btn-link disabled" href="">
-            View
-        </a>
+    <a class="btn btn-link disabled" href="">
     @endif
+        View
+    </a>
 
-    @if (Auth::check() && isset($company))
-        <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
-            Edit
-        </a>
+    @if (isset($company) && Auth::user()->can('update', $company))
+    <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
     @else
-        <a class="btn btn-link disabled" href="">
-            Edit
-        </a>
+    <a class="btn btn-link disabled" href="">
     @endif
+        Edit
+    </a>
     
-    @if (Auth::check() && isset($company))
-        <form class="inline" method="POST" action="{{ route('company.destroy', $company->id) }}">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-link delete-company"
-                data-company-name="{{ $company->name }}">
-                Delete
-            </button>
-        </form>
+    @if (isset($company)  && Auth::user()->can('delete', $company))
+    <form class="inline" method="POST" action="{{ route('company.destroy', $company->id) }}">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-link delete-company"
+            data-company-name="{{ $company->name }}">
+            Delete
+        </button>
+    </form>
     @else
-        <form class="inline">
-            <button type="button" class="btn btn-link disabled">
-                Delete
-            </button>
-        </form>
+    <form class="inline">
+        <button type="button" class="btn btn-link disabled">
+            Delete
+        </button>
+    </form>
     @endif
 
     @if (!isset($hideCreateButton) || !$hideCreateButton)
