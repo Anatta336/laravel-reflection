@@ -1,6 +1,6 @@
 @extends('layouts.employee', [
     'header' => 'Create Employee',
-    'hideCreateButton' => true, // user might think this "create" link will use current form values
+    'disableCreateButton' => true, // user might think this "create" link will use current form values
 ])
 
 @section('employeeContent')

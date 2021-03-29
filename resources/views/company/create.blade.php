@@ -1,6 +1,6 @@
 @extends('layouts.company', [
     'header' => 'Create Company',
-    'hideCreateButton' => true, // user might think this "create" link will use current form values
+    'disableCreateButton' => true, // user might think this "create" link will use current form values
 ])
 
 @section('companyContent')

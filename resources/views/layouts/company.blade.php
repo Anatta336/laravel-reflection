@@ -25,10 +25,8 @@
     @component('components.company.deleteButton', ['company' => $company ?? null])
     @endcomponent
 
-    @if (!isset($hideCreateButton) || !$hideCreateButton)
-        @component('components.company.createButton')
-        @endcomponent
-    @endif
+    @component('components.company.createButton', ['isForcedToDisable' => !empty($disableCreateButton)])
+    @endcomponent
 </div>
 </div>
 </div>

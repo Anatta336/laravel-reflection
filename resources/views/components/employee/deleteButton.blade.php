@@ -2,7 +2,7 @@
 <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
     @csrf
     @method('DELETE')
-    @if (isset($isFromCompanyEmployees) && $isFromCompanyEmployees)
+    @if (!empty($isFromCompanyEmployees))
         <input type="hidden" name="is-from-company-employees" value="1">
     @endif
 
