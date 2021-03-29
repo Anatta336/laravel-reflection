@@ -29,5 +29,12 @@
     @endif
 </p>
 
-<p>Phone number: <strong>{{ $employee->phone }}</strong></p>
+<p>Phone number:
+    @if ($employee->phone)
+        <strong>{{ $employee->phone }}</strong></p>
+    @else
+        <strong>None</strong>
+    @endif
+</p>
+
 @endsection
