@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdateCompany extends FormRequest
 {
@@ -27,6 +26,8 @@ class UpdateCompany extends FormRequest
         return [
             'name' => 'required',
             'logo-file' => 'nullable|dimensions:min_width=100,min_height=100',
+            'email' => 'nullable|email',
+            'website' => 'nullable|url',
         ];
     }
 
@@ -40,6 +41,8 @@ class UpdateCompany extends FormRequest
         return [
             'name.required' => 'A company name is required.',
             'logo-file.dimensions' => 'The logo image must be at least 100px in width and height.',
+            'email.email' => 'Invalid email address.',
+            'website.url' => 'Invalid URL.',
         ];
     }
 }
