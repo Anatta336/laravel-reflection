@@ -15,7 +15,7 @@ class EmployeesOfCompany extends Controller
     {
         return view('employee.companyEmployees', [
             'company' => $company,
-            'employees' => $company->employees()->paginate(10),
+            'employees' => $company->employees()->orderBy('last_name')->paginate(10),
         ]);
     }
 }
