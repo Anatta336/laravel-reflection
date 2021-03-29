@@ -49878,8 +49878,8 @@ var app = new Vue({
 
 __webpack_require__(/*! ./confirmDelete */ "./resources/js/confirmDelete.js");
 
-(function initConfirmDeleteForEmployees() {
-  var deleteButtons = document.querySelectorAll('.delete-employee');
+(function prepareConfirmDelete() {
+  var deleteButtons = document.querySelectorAll('.delete');
 
   if (!deleteButtons) {
     // cannot proceed without buttons to trigger deletion
@@ -49892,39 +49892,15 @@ __webpack_require__(/*! ./confirmDelete */ "./resources/js/confirmDelete.js");
   }
 
   deleteButtons.forEach(function (button) {
-    var name = button.getAttribute('data-employee-name');
+    var name = button.getAttribute('data-name');
 
     if (name === null || name === '') {
       return;
     }
 
-    confirmDelete(button, "Are you sure you want to delete the employee ".concat(name, "?"));
+    confirmDelete(button, "Are you sure you want to delete ".concat(name, "?"));
   });
 })();
-
-(function initConfirmDeleteForCompanies() {
-  var deleteButtons = document.querySelectorAll('.delete-company');
-
-  if (!deleteButtons) {
-    // cannot proceed without buttons to trigger deletion
-    return;
-  }
-
-  if (!document.querySelector('#delete-modal')) {
-    // cannot proceed without a #delete-modal available on the page
-    return;
-  }
-
-  deleteButtons.forEach(function (button) {
-    var name = button.getAttribute('data-company-name');
-
-    if (name === null || name === '') {
-      return;
-    }
-
-    confirmDelete(button, "Are you sure you want to delete the company ".concat(name, "?"));
-  });
-})(); //TODO: above blocks are very similar, any reason not to combine them?
 
 /***/ }),
 

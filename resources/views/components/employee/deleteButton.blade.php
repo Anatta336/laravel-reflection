@@ -2,8 +2,8 @@
 <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
     @csrf
     @method('DELETE')
-    <button type="submit" class="btn btn-link delete-employee"
-        data-employee-name="{{ $employee->first_name . ' ' . $employee->last_name }}">
+    <button type="submit" class="btn btn-link delete"
+        data-name="{{ $employee->first_name . ' ' . $employee->last_name }}">
         Delete
     </button>
 </form>
