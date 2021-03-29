@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Employee;
 
-class EmployeesOfCompany extends Controller
+class EmployeesOfCompanyController extends Controller
 {
     /**
      * Display a listing of the resource.

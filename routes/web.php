@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index')
 Route::resource('employee', EmployeeController::class);
 Route::resource('company', CompanyController::class);
 
-Route::get('/company/{company}/employees/', 'EmployeesOfCompany@index')
+Route::get('/company/{company}/employees/', 'EmployeesOfCompanyController@index')
     ->name('employeesOfCompany.index')
     ->middleware('can:view,App\Employee');
 
