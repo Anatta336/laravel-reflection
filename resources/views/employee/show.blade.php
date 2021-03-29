@@ -8,9 +8,13 @@
 <p>
     Employer: 
     @if ($employee->company)
-        <a href="{{ route('company.show', $employee->company->id) }}">
+        @if (Auth::user()->can('view', $company))
+            <a href="{{ route('company.show', $employee->company->id) }}">
+                <strong>{{ $employee->company->name }}</strong>
+            </a>
+        @else
             <strong>{{ $employee->company->name }}</strong>
-        </a>
+        @endif
     @else
         <strong>None</strong>
     @endif
