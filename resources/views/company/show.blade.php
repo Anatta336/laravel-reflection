@@ -39,7 +39,7 @@
     <strong>{{ $company->employees->count() }} </strong>
 </p>
 @component('components.linkButton', [
-    'authorized' => Auth::user()->can('view', App\Employee::class),
+    'authorized' => Auth::check() && Auth::user()->can('view', App\Employee::class),
     'route' => route('employeesOfCompany.index', $company->id),
     'label' => 'View employees',
 ])@endcomponent

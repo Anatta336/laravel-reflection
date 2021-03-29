@@ -7,7 +7,7 @@
 <p>Name: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
 <p>Employer: 
     @if ($employee->company)
-        @if (Auth::user()->can('view', $employee->company))
+        @if (Auth::check() && Auth::user()->can('view', $employee->company))
             <a href="{{ route('company.show', $employee->company->id) }}">
                 <strong>{{ $employee->company->name }}</strong>
             </a>
