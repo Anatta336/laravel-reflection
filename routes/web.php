@@ -74,6 +74,11 @@ Route::post('/company/add', 'CompanyController@store')
     ->name('company.store')
     ->middleware('can:create,App\Company');
 
+// -- EmployeesOfCompany routes
+Route::get('/company/list-employees/{company}', 'EmployeesOfCompany@index')
+    ->name('employeesOfCompany.list')
+    ->middleware('can:view,App\Employee');
+
 // add Auth routes, but set option to disable registering new users
 Auth::routes(['register' => false]);
 
