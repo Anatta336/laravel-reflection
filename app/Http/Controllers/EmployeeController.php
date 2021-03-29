@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Http\Requests\CreateEmployee;
+use App\Http\Requests\UpdateEmployee;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
@@ -32,19 +34,12 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateEmployee  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateEmployee $request)
     {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'company_id' => 'nullable|exists:companies,id',
-            'email' => 'nullable|email',
-            'phone' => ['nullable', new PhoneNumber()],
-        ]);
-
+        $validated = $request->validated();
         $employee = new Employee($validated);
         $employee->save();
 
@@ -81,20 +76,13 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateEmployee  $request
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateEmployee $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'company_id' => 'nullable|exists:companies,id',
-            'email' => 'nullable|email',
-            'phone' => ['nullable', new PhoneNumber()],
-        ]);
-
+        $validated = $request->validated();
         $employee->update($validated);
 
         return redirect()

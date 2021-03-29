@@ -36,10 +36,11 @@ class PhoneNumber implements Rule
             return false;
         }
 
-        // matches anything except: digits, +, -, (, ), and spaces
+        // matches anything except: digits, +, -, ., (, ), x, and spaces
         // "(+44) 01235 67890" is valid
         // "555-4433-2232" is valid
-        $invalid = '/[^0-9+() -]/';
+        // "1800 DEALS" is not valid
+        $invalid = '/[^0-9+()\.x -]/';
         $hasInvalidChars = preg_match_all($invalid, $value, $this->foundInvalid);
         if ($hasInvalidChars) {
             return false;
