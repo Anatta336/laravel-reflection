@@ -15,6 +15,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Company::class);
+
         $companies = Company::orderBy('name')->paginate(10);
         return view('company.list', ['companies' => $companies]);
     }
@@ -26,6 +28,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Company::class);
+
         return view('company.create');
     }
 
@@ -37,6 +41,8 @@ class CompanyController extends Controller
      */
     public function store(CreateCompany $request)
     {
+        $this->authorize('create', Company::class);
+
         $validated = $request->validated();
 
         if ($request->hasFile('logo-file')) {
@@ -64,6 +70,8 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+        $this->authorize('view', $company);
+
         return view('company.show', ['company' => $company]);
     }
 
@@ -75,6 +83,8 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
+        $this->authorize('update', $company);
+
         return view('company.edit', ['company' => $company]);
     }
 
@@ -87,6 +97,8 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompany $request, Company $company)
     {
+        $this->authorize('update', $company);
+
         $validated = $request->validated();
 
         if ($request->hasFile('logo-file')) {
@@ -113,6 +125,8 @@ class CompanyController extends Controller
      */
     public function destroy(?Company $company = null)
     {
+        $this->authorize('delete', $company);
+
         if (!$company) {
             return back()->with('message', [
                 'alert-type' => 'danger',

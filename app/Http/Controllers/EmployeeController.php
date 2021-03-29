@@ -15,6 +15,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Employee::class);
+
         $employees = Employee::orderBy('last_name')->paginate(10);
         return view('employee.list', ['employees' => $employees]);
     }
@@ -26,6 +28,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Employee::class);
+
         return view('employee.create');
     }
 
@@ -37,6 +41,8 @@ class EmployeeController extends Controller
      */
     public function store(CreateEmployee $request)
     {
+        $this->authorize('create', Employee::class);
+
         $validated = $request->validated();
         $employee = new Employee($validated);
         $employee->save();
@@ -57,6 +63,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        $this->authorize('view', $employee);
+
         return view('employee.show', ['employee' => $employee]);
     }
 
@@ -68,6 +76,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        $this->authorize('update', $employee);
+
         return view('employee.edit', ['employee' => $employee]);
     }
 
@@ -80,6 +90,8 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployee $request, Employee $employee)
     {
+        $this->authorize('update', $employee);
+
         $validated = $request->validated();
         $employee->update($validated);
 
@@ -99,6 +111,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $this->authorize('delete', $employee);
+
         if (!$employee) {
             return back()->with('message', [
                 'alert-type' => 'danger',
