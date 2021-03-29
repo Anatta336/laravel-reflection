@@ -14,9 +14,16 @@
                         </div>
                     @endif
 
+                    <p>Welcome, {{ Auth::user()->name }}.</p>
                     <ul>
-                        <li><a href="{{ route('company.all') }}">Companies</a></li>
-                        <li><a href="{{ route('employee.all') }}">Employees</a></li>
+                        <li>
+                            @component('components.company.viewAllButton')
+                            @endcomponent
+                        </li>
+                        <li>
+                            @component('components.employee.viewAllButton')
+                            @endcomponent
+                        </li>
                     </ul>
                 </div>
             </div>
