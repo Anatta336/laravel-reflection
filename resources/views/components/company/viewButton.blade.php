@@ -1,5 +1,5 @@
 @component('components.linkButton', [
-    'authorized' => Auth::user()->can('view', $company),
-    'route' => route('company.show', $company->id),
+    'authorized' => !!$company && Auth::user()->can('view', $company),
+    'route' => $company ? route('company.show', $company->id) : '',
     'label' => 'View',
 ])@endcomponent

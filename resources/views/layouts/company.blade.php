@@ -16,13 +16,13 @@
     @component('components.company.viewAllButton')
     @endcomponent
     
-    @component('components.company.viewButton', ['company' => $company])
+    @component('components.company.viewButton', ['company' => $company ?? null])
     @endcomponent
 
-    @component('components.company.editButton', ['company' => $company])        
+    @component('components.company.editButton', ['company' => $company ?? null])        
     @endcomponent
     
-    @component('components.company.deleteButton', ['company' => $company])
+    @component('components.company.deleteButton', ['company' => $company ?? null])
     @endcomponent
 
     @if (!isset($hideCreateButton) || !$hideCreateButton)

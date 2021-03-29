@@ -5,8 +5,7 @@
 
 @section('employeeContent')
 <p>Name: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
-<p>
-    Employer: 
+<p>Employer: 
     @if ($employee->company)
         @if (Auth::user()->can('view', $employee->company))
             <a href="{{ route('company.show', $employee->company->id) }}">

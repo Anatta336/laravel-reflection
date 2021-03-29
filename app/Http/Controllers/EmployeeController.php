@@ -112,7 +112,7 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()
-            ->route('employee.all')
+            ->route('employee.index')
             ->with('message', [
                 'alert-type' => 'success',
                 'content' => "Deleted employee: $name",

@@ -1,4 +1,4 @@
-@if (Auth::user()->can('delete', $employee))
+@if ($employee && Auth::user()->can('delete', $employee))
 <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
     @csrf
     @method('DELETE')

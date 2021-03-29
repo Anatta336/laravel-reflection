@@ -14,65 +14,36 @@
 Route::get('/', 'HomeController@index')
     ->name('home');
 
-// -- Employee routes
-// list all
-Route::get('/employee/all', 'EmployeeController@index')
-    ->name('employee.all')
-    ->middleware('can:view,App\Employee');
-
-// show individual
-Route::get('/employee/view/{employee}', 'EmployeeController@show')
-    ->name('employee.show')
-    ->middleware('can:view,employee');
-
-// edit existing
-Route::get('/employee/edit/{employee}', 'EmployeeController@edit')
-    ->name('employee.edit')
-    ->middleware('can:update,employee');
-Route::put('/employee/edit/{employee}', 'EmployeeController@update')
-    ->name('employee.update')
-    ->middleware('can:update,employee');
-
-// delete existing
-Route::delete('/employee/delete/{employee}', 'EmployeeController@destroy')
-    ->name('employee.destroy')
-    ->middleware('can:delete,employee');
-
-// add new
-Route::get('/employee/add', 'EmployeeController@create')
-    ->name('employee.create')
-    ->middleware('can:create,employee');
-Route::post('/employee/add', 'EmployeeController@store')
-    ->name('employee.store')
-    ->middleware('can:create,employee');
+Route::resource('employee', EmployeeController::class);
+Route::resource('company', CompanyController::class);
 
 // -- Company routes
-Route::get('/company/all', 'CompanyController@index')
-    ->name('company.all')
-    ->middleware('can:view,App\Company');
+// Route::get('/company/all', 'CompanyController@index')
+//     ->name('company.index')
+//     ->middleware('can:view,App\Company');
 
-Route::get('/company/view/{company}', 'CompanyController@show')
-    ->name('company.show')
-    ->middleware('can:view,company');
+// Route::get('/company/view/{company}', 'CompanyController@show')
+//     ->name('company.show')
+//     ->middleware('can:view,company');
 
-Route::get('/company/edit/{company}', 'CompanyController@edit')
-    ->name('company.edit')
-    ->middleware('can:update,company');
-Route::patch('/company/edit/{company}', 'CompanyController@update')
-    ->name('company.update')
-    ->middleware('can:update,company');
+// Route::get('/company/edit/{company}', 'CompanyController@edit')
+//     ->name('company.edit')
+//     ->middleware('can:update,company');
+// Route::patch('/company/edit/{company}', 'CompanyController@update')
+//     ->name('company.update')
+//     ->middleware('can:update,company');
 
-Route::delete('/company/delete/{company}', 'CompanyController@destroy')
-    ->name('company.destroy')
-    ->middleware('can:delete,company');
+// Route::delete('/company/delete/{company}', 'CompanyController@destroy')
+//     ->name('company.destroy')
+//     ->middleware('can:delete,company');
 
-Route::get('/company/add', 'CompanyController@create')
-    ->name('company.create')
-    ->middleware('can:create,App\Company');
+// Route::get('/company/add', 'CompanyController@create')
+//     ->name('company.create')
+//     ->middleware('can:create,App\Company');
 
-Route::post('/company/add', 'CompanyController@store')
-    ->name('company.store')
-    ->middleware('can:create,App\Company');
+// Route::post('/company/add', 'CompanyController@store')
+//     ->name('company.store')
+//     ->middleware('can:create,App\Company');
 
 // -- EmployeesOfCompany routes
 Route::get('/company/list-employees/{company}', 'EmployeesOfCompany@index')

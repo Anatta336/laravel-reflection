@@ -49,8 +49,6 @@ class CompanyController extends Controller
         $company = new Company($validated);
         $company->save();
 
-        // dd($company);
-
         return view('company.show', ['company' => $company])
             ->with('message', [
                 'alert-type' => 'success',
@@ -124,7 +122,7 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect()
-            ->route('company.all')
+            ->route('company.index')
             ->with('message', [
                 'alert-type' => 'success',
                 'content' => "Deleted company: $name",
