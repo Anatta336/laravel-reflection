@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="form-label" for="name">Name:</label>
+    <label class="form-label required" for="name">Name:</label>
     <input class="form-control" type="text" name="name" id="name" required
         @if (old('_token'))
             value="{{ old('name') }}"

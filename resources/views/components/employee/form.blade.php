@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="form-label" for="first_name">First name:</label>
+    <label class="form-label required" for="first_name">First name</label>
     <input class="form-control" type="text" name="first_name" id="first_name" required
         @if (old('_token'))
             value="{{ old('first_name') }}"
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <label class="form-label" for="last_name">Last name:</label>
+    <label class="form-label required" for="last_name">Last name</label>
     <input class="form-control" type="text" name="last_name" id="last_name" required
         @if (old('_token'))
             value="{{ old('last_name') }}"
