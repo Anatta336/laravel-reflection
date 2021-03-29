@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <ul>
+                        <li><a href="{{ route('company.all') }}">Companies</a></li>
+                        <li><a href="{{ route('employee.all') }}">Employees</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
