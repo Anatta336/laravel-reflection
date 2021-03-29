@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Http\Requests\CreateEmployee;
 use App\Http\Requests\UpdateEmployee;
-use App\Rules\PhoneNumber;
-use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -47,7 +45,7 @@ class EmployeeController extends Controller
             ->route('employee.show', ['employee' => $employee])
             ->with('message', [
                 'alert-type' => 'success',
-                'content' => 'Employee created.',
+                'content' => "Added new employee: {$employee->first_name} {$employee->last_name}.",
             ]);
     }
 
@@ -89,7 +87,7 @@ class EmployeeController extends Controller
             ->route('employee.show', ['employee' => $employee])
             ->with('message', [
                 'alert-type' => 'success',
-                'content' => 'Employee updated.',
+                'content' => "Updated employee: {$employee->first_name} {$employee->last_name}.",
             ]);
     }
 
