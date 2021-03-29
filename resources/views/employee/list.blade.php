@@ -17,40 +17,17 @@
             <td class="name">
                 {{ $employee->first_name }} {{ $employee->last_name }}
             </td>
-            <td class="show">
-                @if (Auth::user()->can('view', $employee))
-                <a class="btn btn-link" href="{{ route('employee.show', $employee->id) }}">
-                @else
-                <a class="btn btn-link disabled" href="">
-                @endif
-                    View
-                </a>
-            </td>
-            
             <td>
-                @if (Auth::user()->can('update', $employee))
-                <a class="btn btn-link" href="{{ route('employee.edit', $employee->id) }}">
-                @else
-                <a class="btn btn-link disabled" href="">
-                @endif
-                    Edit
-                </a>
+                @component('components.employee.viewButton', ['employee' => $employee])
+                @endcomponent
             </td>
             <td>
-                @if (Auth::user()->can('delete', $employee))
-                    <form class="inline" method="POST" action="{{ route('employee.destroy', $employee->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-link delete-employee"
-                            data-employee-name="{{ $employee->first_name . ' ' . $employee->last_name }}">
-                            Delete
-                        </button>
-                    </form>
-                @else
-                    <button type="button" class="btn btn-link disabled">
-                        Delete
-                    </button>
-                @endif
+                @component('components.employee.editButton', ['employee' => $employee])
+                @endcomponent
+            </td>
+            <td>
+               @component('components.employee.deleteButton', ['employee' => $employee])
+               @endcomponent
             </td>
         </tr>
     @endforeach

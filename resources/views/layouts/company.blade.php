@@ -13,46 +13,17 @@
     @yield('companyContent')
 </div>
 <div class="card-footer">
-    @if (Auth::user()->can('view', App\Company::class))
-    <a class="btn btn-link" href="{{ route('company.all') }}">
-    @else
-    <a class="btn btn-link disabled" href="">
-    @endif
-        Show all companies
-    </a>
+    @component('components.company.viewAllButton')
+    @endcomponent
     
-    @if (isset($company) && Auth::user()->can('view', $company))
-    <a class="btn btn-link" href="{{ route('company.show', $company->id) }}">
-    @else
-    <a class="btn btn-link disabled" href="">
-    @endif
-        View
-    </a>
+    @component('components.company.viewButton', ['company' => $company])
+    @endcomponent
 
-    @if (isset($company) && Auth::user()->can('update', $company))
-    <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
-    @else
-    <a class="btn btn-link disabled" href="">
-    @endif
-        Edit
-    </a>
+    @component('components.company.editButton', ['company' => $company])        
+    @endcomponent
     
-    @if (isset($company)  && Auth::user()->can('delete', $company))
-    <form class="inline" method="POST" action="{{ route('company.destroy', $company->id) }}">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-link delete-company"
-            data-company-name="{{ $company->name }}">
-            Delete
-        </button>
-    </form>
-    @else
-    <form class="inline">
-        <button type="button" class="btn btn-link disabled">
-            Delete
-        </button>
-    </form>
-    @endif
+    @component('components.company.deleteButton', ['company' => $company])
+    @endcomponent
 
     @if (!isset($hideCreateButton) || !$hideCreateButton)
         @component('components.company.createButton')

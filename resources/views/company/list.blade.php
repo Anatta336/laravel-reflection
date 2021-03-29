@@ -17,40 +17,17 @@
             <td class="name">
                 {{ $company->name }}
             </td>
-            <td class="show">
-                @if (Auth::user()->can('view', $company))
-                <a class="btn btn-link" href="{{ route('company.show', $company->id) }}">
-                @else
-                <a class="btn btn-link disabled" href="">
-                @endif
-                    View
-                </a>
-            </td>
-            
             <td>
-                @if (Auth::user()->can('update', $company))
-                <a class="btn btn-link" href="{{ route('company.edit', $company->id) }}">
-                @else
-                <a class="btn btn-link disabled" href="">
-                @endif
-                    Edit
-                </a>
+                @component('components.company.viewButton', ['company' => $company])
+                @endcomponent
             </td>
             <td>
-                @if (Auth::user()->can('delete', $company))
-                    <form class="inline" method="POST" action="{{ route('company.destroy', $company->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-link delete-company"
-                            data-company-name="{{ $company->name }}">
-                            Delete
-                        </button>
-                    </form>
-                @else
-                    <button type="button" class="btn btn-link disabled">
-                        Delete
-                    </button>
-                @endif
+                @component('components.company.editButton', ['company' => $company])
+                @endcomponent
+            </td>
+            <td>
+                @component('components.company.deleteButton', ['company' => $company])
+                @endcomponent
             </td>
         </tr>
     @endforeach
