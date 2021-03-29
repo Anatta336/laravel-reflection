@@ -40,7 +40,7 @@
 </p>
 @component('components.linkButton', [
     'authorized' => Auth::user()->can('view', App\Employee::class),
-    'route' => route('employeesOfCompany.list', $company->id),
+    'route' => route('employeesOfCompany.index', $company->id),
     'label' => 'View employees',
 ])@endcomponent
 
