@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Http\Requests\CreateCompany;
 use App\Http\Requests\UpdateCompany;
-use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -49,7 +48,8 @@ class CompanyController extends Controller
         $company = new Company($validated);
         $company->save();
 
-        return view('company.show', ['company' => $company])
+        return redirect()
+            ->route('company.show', ['company' => $company])
             ->with('message', [
                 'alert-type' => 'success',
                 'content' => "Created new company: {$company->name}", 
@@ -97,7 +97,9 @@ class CompanyController extends Controller
         unset($validated['logo-file']);
         $company->update($validated);
 
-        return view('company.show', ['company' => $company])->with('message', [
+        return redirect()
+            ->route('company.show', ['company' => $company])
+            ->with('message', [
             'alert-type' => 'success',
             'content' => "Updated company: {$company->name}", 
         ]);
@@ -109,7 +111,7 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy(?Company $company = null)
     {
         if (!$company) {
             return back()->with('message', [
