@@ -25,7 +25,10 @@
                 @endcomponent
             </td>
             <td>
-               @component('components.employee.deleteButton', ['employee' => $employee])
+               @component('components.employee.deleteButton', [
+                   'employee' => $employee,
+                   'isFromCompanyEmployees' => $isFromCompanyEmployees ?? false,
+                ])
                @endcomponent
             </td>
         </tr>

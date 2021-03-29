@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Http\Requests\CreateEmployee;
 use App\Http\Requests\UpdateEmployee;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -107,9 +108,10 @@ class EmployeeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Employee  $employee
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy(Employee $employee, Request $request)
     {
         $this->authorize('delete', $employee);
 
@@ -120,8 +122,19 @@ class EmployeeController extends Controller
             ]);
         }
 
+        $company = $employee->company;
+
         $name = "{$employee->first_name} {$employee->last_name}";
         $employee->delete();
+
+        if ($request->input('is-from-company-employees', '0') && $company) {
+            return redirect()
+                ->route('employeesOfCompany.index', ['company' => $company])
+                ->with('message', [
+                    'alert-type' => 'success',
+                    'content' => "Deleted employee: $name",
+            ]);
+        }
 
         return redirect()
             ->route('employee.index')
