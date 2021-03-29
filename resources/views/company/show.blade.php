@@ -26,14 +26,15 @@
 </p>
 
 <p>Logo:
-    @if ($company->logo)
-        <img class="img-fluid logo"
-            src="{{ asset('storage/' . $company->logo) }}"
-            alt="Logo of {{ $company->name }}">
-    @else
-        <strong>None</strong>
-    @endif
-</p>
+@if ($company->logo)
+    </p>
+    <img class="img-fluid img-thumbnail logo"
+        src="{{ asset('storage/' . $company->logo) }}"
+        alt="Logo of {{ $company->name }}">
+@else
+    <strong>None</strong>
+    </p>
+@endif
 
 <p>Employees:
     <strong>{{ $company->employees->count() }} </strong>
@@ -43,6 +44,5 @@
     'route' => route('employeesOfCompany.index', $company->id),
     'label' => 'View employees',
 ])@endcomponent
-
 
 @endsection
