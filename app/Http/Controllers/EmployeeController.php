@@ -25,12 +25,16 @@ class EmployeeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create', Employee::class);
 
+        if ($request->has('defaultCompany')) {
+            return view('employee.create', ['defaultCompany' => $request->input('defaultCompany')]);
+        }
         return view('employee.create');
     }
 

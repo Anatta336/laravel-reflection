@@ -9,7 +9,8 @@
     @method('POST')
 
     @component('components.employee.form', [
-        'errors' => $errors
+        'errors' => $errors,
+        'defaultCompanyId' => ($defaultCompany ?? null),
     ])@endcomponent
 
     <button class="btn btn-primary" type="submit">Create</button>

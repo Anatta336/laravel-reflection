@@ -41,9 +41,11 @@
             @endif value="">
             None
         </option>
+        
         @foreach (App\Company::all()->sortBy('name') as $company)
             <option @if (old('company_id') == $company->id
-                    || (!old('_token') && isset($employee) && $employee->company == $company))
+                    || (!old('_token') && isset($employee) && $employee->company == $company)
+                    || (!old('_token') && isset($defaultCompanyId) && $defaultCompanyId == $company->id))
                 selected
                 @endif value="{{ $company->id }}">
                 {{ $company->name }}

@@ -27,7 +27,7 @@
             <td>
                @component('components.employee.deleteButton', [
                    'employee' => $employee,
-                   'isFromCompanyEmployees' => $isFromCompanyEmployees ?? false,
+                   'isFromCompanyEmployees' => !empty($owningCompany),
                 ])
                @endcomponent
             </td>
@@ -41,7 +41,9 @@
 </div>
 
 <div class="card-footer">
-    @component('components.employee.createButton')
+    @component('components.employee.createButton', [
+        'defaultCompany' => ($owningCompany ?? null),
+    ])
     @endcomponent
 </div>
 
