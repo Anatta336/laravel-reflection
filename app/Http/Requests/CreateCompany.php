@@ -25,7 +25,7 @@ class CreateCompany extends FormRequest
     {
         return [
             'name' => 'required',
-            'logo-file' => 'required|dimensions:min_width=100,min_height=100',
+            'logo-file' => 'required|mimetypes:image/*|dimensions:min_width=100,min_height=100|max:5012',
         ];
     }
 
@@ -39,7 +39,9 @@ class CreateCompany extends FormRequest
         return [
             'name.required' => 'A company name is required.',
             'logo-file.required' => 'A company logo is required.',
+            'logo-file.mimetypes' => 'The logo must be an image file.',
             'logo-file.dimensions' => 'The logo image must be at least 100px in width and height.',
+            'logo-file.max' => 'The logo image cannot be more than 5MB in size.',
         ];
     }
 }

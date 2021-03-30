@@ -25,7 +25,7 @@ class UpdateCompany extends FormRequest
     {
         return [
             'name' => 'required',
-            'logo-file' => 'nullable|dimensions:min_width=100,min_height=100',
+            'logo-file' => 'nullable|mimetypes:image/*|dimensions:min_width=100,min_height=100|max:5120',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
         ];
@@ -40,7 +40,9 @@ class UpdateCompany extends FormRequest
     {
         return [
             'name.required' => 'A company name is required.',
+            'logo-file.mimetypes' => 'The logo must be an image file.',
             'logo-file.dimensions' => 'The logo image must be at least 100px in width and height.',
+            'logo-file.max' => 'The logo image cannot be more than 5MB in size.',
             'email.email' => 'Invalid email address.',
             'website.url' => 'Invalid URL.',
         ];

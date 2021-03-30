@@ -16,7 +16,8 @@
 
 <div class="form-group">
     <label class="form-label required" for="logo-file">Logo:</label>
-    <input class="form-control" type="file" name="logo-file" id="logo-file">
+    <input class="form-control" type="file" name="logo-file" id="logo-file"
+        accept=".png, .jpg, .jpeg, .webp, image/*">
     @if ($errors->has('logo-file'))
         <div class="alert alert-danger">
             {{ $errors->first('logo-file') }}
