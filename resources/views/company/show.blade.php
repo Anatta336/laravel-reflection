@@ -42,7 +42,7 @@
 @component('components.linkButton', [
     'authorized' => Auth::check() && Auth::user()->can('view', App\Employee::class),
     'route' => route('employeesOfCompany.index', $company->id),
-    'label' => 'View employees',
+    'label' => "View employees of {$company->name}",
 ])@endcomponent
 
 @endsection
