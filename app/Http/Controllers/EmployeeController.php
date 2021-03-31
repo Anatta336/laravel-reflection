@@ -7,6 +7,11 @@ use App\Http\Requests\CreateEmployee;
 use App\Http\Requests\UpdateEmployee;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for the Employee model.
+ *
+ * @package Employee
+ */
 class EmployeeController extends Controller
 {
     /**
@@ -26,6 +31,7 @@ class EmployeeController extends Controller
      * Show the form for creating a new resource.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -41,15 +47,15 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\CreateEmployee  $request
+     * @param \App\Http\Requests\CreateEmployee $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateEmployee $request)
     {
         $this->authorize('create', Employee::class);
 
-        $validated = $request->validated();
-        $employee = new Employee($validated);
+        $employee = new Employee($request->validated());
         $employee->save();
 
         return redirect()
@@ -63,7 +69,8 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Employee  $employee
+     * @param \App\Employee $employee
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Employee $employee)
@@ -76,7 +83,8 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Employee  $employee
+     * @param \App\Employee $employee
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
@@ -89,8 +97,9 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateEmployee  $request
-     * @param  \App\Employee  $employee
+     * @param \App\Http\Requests\UpdateEmployee $request
+     * @param \App\Employee                     $employee
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateEmployee $request, Employee $employee)
@@ -111,8 +120,9 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Employee  $employee
+     * @param \App\Employee            $employee
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee, Request $request)
@@ -137,7 +147,7 @@ class EmployeeController extends Controller
                 ->with('message', [
                     'alert-type' => 'success',
                     'content' => "Deleted employee: $name",
-            ]);
+                ]);
         }
 
         return redirect()
@@ -145,6 +155,6 @@ class EmployeeController extends Controller
             ->with('message', [
                 'alert-type' => 'success',
                 'content' => "Deleted employee: $name",
-        ]);
+            ]);
     }
 }

@@ -3,9 +3,13 @@
 namespace App\Policies;
 
 use App\User;
-use App\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Determines if a given user can perform various actions on Employees.
+ *
+ * @package Employee
+ */
 class EmployeePolicy
 {
     use HandlesAuthorization;
@@ -13,11 +17,9 @@ class EmployeePolicy
     /**
      * Determine whether the user can view the employee.
      *
-     * @param  \App\User  $user
-     * @param  \App\Employee  $employee
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, ?Employee $employee = null)
+    public function view()
     {
         // any logged in user can view employees
         return true;
@@ -26,8 +28,9 @@ class EmployeePolicy
     /**
      * Determine whether the user can create employees.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
     public function create(User $user)
     {
@@ -37,11 +40,11 @@ class EmployeePolicy
     /**
      * Determine whether the user can update the employee.
      *
-     * @param  \App\User  $user
-     * @param  \App\Employee  $employee
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function update(User $user, ?Employee $employee = null)
+    public function update(User $user)
     {
         return $user->canEditEmployee;
     }
@@ -49,11 +52,11 @@ class EmployeePolicy
     /**
      * Determine whether the user can delete the employee.
      *
-     * @param  \App\User  $user
-     * @param  \App\Employee  $employee
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function delete(User $user, ?Employee $employee = null)
+    public function delete(User $user)
     {
         return $user->canDeleteEmployee;
     }
@@ -61,11 +64,11 @@ class EmployeePolicy
     /**
      * Determine whether the user can restore the employee.
      *
-     * @param  \App\User  $user
-     * @param  \App\Employee  $employee
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function restore(User $user, ?Employee $employee = null)
+    public function restore(User $user)
     {
         return $user->canCreateEmployee;
     }
@@ -73,11 +76,11 @@ class EmployeePolicy
     /**
      * Determine whether the user can permanently delete the employee.
      *
-     * @param  \App\User  $user
-     * @param  \App\Employee  $employee
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function forceDelete(User $user, ?Employee $employee = null)
+    public function forceDelete(User $user)
     {
         return $user->canDeleteEmployee;
     }

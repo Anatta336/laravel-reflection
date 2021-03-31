@@ -5,6 +5,11 @@ namespace App\Http\Requests;
 use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validation for updating an employee.
+ *
+ * @package Employee
+ */
 class UpdateEmployee extends FormRequest
 {
     /**
@@ -36,7 +41,7 @@ class UpdateEmployee extends FormRequest
 
     /**
      * Get the error messages for if validation rules do not pass.
-     * 
+     *
      * @return array
      */
     public function messages()

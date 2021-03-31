@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Employee::class, function (Faker $faker) {
     return [
-        'company_id' => function() {
+        'company_id' => function () {
             // assign to a random company, or create a new one if none exist
             if (Company::all()->count() > 0) {
                 $company = Company::all()->random();

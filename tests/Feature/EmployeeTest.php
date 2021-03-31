@@ -8,6 +8,14 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * Feature tests for manipulating Employees.
+ * 
+ * @package Employee
+ * 
+ * @SuppressWarnings(CamelCaseMethodName)
+ * @SuppressWarnings(TooManyPublicMethods)
+ */
 class EmployeeTest extends TestCase
 {
     use RefreshDatabase;
@@ -258,8 +266,7 @@ class EmployeeTest extends TestCase
         $this->actingAs($user);
 
         // create employees
-        $employees = factory('App\Employee', 5)->create();
-        $toView = $employees[1];
+        factory('App\Employee', 5)->create();
 
         // attempt to view list of employees
         $response = $this->get(route('employee.index'));
@@ -273,8 +280,7 @@ class EmployeeTest extends TestCase
     public function guest_can_not_list_employees()
     {
         // create employees
-        $employees = factory('App\Employee', 5)->create();
-        $toView = $employees[1];
+        factory('App\Employee', 5)->create();
 
         // attempt to view list of employees
         $response = $this->get(route('employee.index'));
