@@ -3,16 +3,17 @@
 use App\User;
 use Illuminate\Database\Seeder;
 
+// Laravel seeders intentionally have no namespace
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
 /**
  * Seeder for the users database table.
  * Creates sample user accounts for use in testing.
  *
  * @package User
  */
-// phpcs:disable
 class UsersTableSeeder extends Seeder
 {
-    // phpcs:enable
 
     /**
      * Run the database seeds.

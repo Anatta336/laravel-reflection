@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+/**
+ * Controller for the home screen.
+ *
+ * @package Home
+ */
 class HomeController extends Controller
 {
     /**

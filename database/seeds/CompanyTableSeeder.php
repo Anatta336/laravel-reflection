@@ -3,6 +3,14 @@
 use App\Company;
 use Illuminate\Database\Seeder;
 
+// Laravel seeders intentionally have no namespace
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
+/**
+ * Seeds the company table.
+ *
+ * @package Company
+ */
 class CompanyTableSeeder extends Seeder
 {
     /**

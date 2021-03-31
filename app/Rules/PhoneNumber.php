@@ -4,33 +4,41 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
+/**
+ * Validation rule for validating a phone number.
+ *
+ * @package Validation
+ */
 class PhoneNumber implements Rule
 {
-    protected array $foundInvalid;
-    protected bool $hasGap;
+    /**
+     * Characters that have been found in the string which
+     * are not permitted in a valid phone number.
+     *
+     * @var array
+     */
+    protected array $foundInvalid = [];
 
     /**
-     * Create a new rule instance.
+     * Whether an excessive whitespace gap was found in
+     * the examined phone number.
      *
-     * @return void
+     * @var bool
      */
-    public function __construct()
-    {
-        $this->foundInvalid = [];
-        $this->hasGap = false;
-    }
+    protected bool $hasGap = false;
 
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute Name of the attribute being validated.
+     * @param mixed  $value     The value that is undergoing validation.
+     *
      * @return bool
      */
     public function passes($attribute, $value)
     {
         $this->foundInvalid = [];
-        $this->hasGap = false;
+        $this->hasGap       = false;
 
         if (!is_string($value)) {
             return false;
@@ -40,15 +48,13 @@ class PhoneNumber implements Rule
         // "(+44) 01235 67890" is valid
         // "555-4433-2232" is valid
         // "1800 DEALS" is not valid
-        $invalid = '/[^0-9+()\.x -]/';
-        $hasInvalidChars = preg_match_all($invalid, $value, $this->foundInvalid);
+        $hasInvalidChars = preg_match_all('/[^0-9+()\.x -]/', $value, $this->foundInvalid);
         if ($hasInvalidChars) {
             return false;
         }
 
         // matches a series of 2 or more spaces
-        $longGap = '/( {2})+/';
-        $this->hasGap = preg_match($longGap, $value) > 0;
+        $this->hasGap = preg_match('/( {2})+/', $value) > 0;
         if ($this->hasGap) {
             return false;
         }

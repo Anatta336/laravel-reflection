@@ -4,12 +4,22 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+// Laravel migrations intentionally have no namespace
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
+/**
+ * Migration to create the Users database table.
+ *
+ * @package User
+ */
 class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function up()
     {

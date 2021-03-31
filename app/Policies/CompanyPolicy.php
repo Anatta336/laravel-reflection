@@ -6,6 +6,11 @@ use App\User;
 use App\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Authorization for viewing and manipulating companies.
+ *
+ * @package Company
+ */
 class CompanyPolicy
 {
     use HandlesAuthorization;
@@ -13,22 +18,20 @@ class CompanyPolicy
     /**
      * Determine whether the user can view the company.
      *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, ?Company $company = null)
+    public function view()
     {
-        // this check isn't really needed, as non-optional User type hinting
-        // means if the user isn't logged in, policy result will be false. 
-        return $user != null;
+        // any logged in user can view companies
+        return true;
     }
 
     /**
      * Determine whether the user can create companies.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
     public function create(User $user)
     {
@@ -36,49 +39,49 @@ class CompanyPolicy
     }
 
     /**
-     * Determine whether the user can update the company.
+     * Determine whether the user can update a company.
      *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function update(User $user, ?Company $company = null)
+    public function update(User $user)
     {
         return $user->canEditCompany;
     }
 
     /**
-     * Determine whether the user can delete the company.
+     * Determine whether the user can delete a company.
      *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function delete(User $user, ?Company $company = null)
+    public function delete(User $user)
     {
         return $user->canDeleteCompany;
     }
 
     /**
-     * Determine whether the user can restore the company.
+     * Determine whether the user can restore a company.
      *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function restore(User $user, ?Company $company = null)
+    public function restore(User $user)
     {
         return $user->canCreateCompany;
     }
 
     /**
-     * Determine whether the user can permanently delete the company.
+     * Determine whether the user can permanently delete a company.
      *
-     * @param  \App\User  $user
-     * @param  \App\Company  $company
-     * @return mixed
+     * @param \App\User $user
+     *
+     * @return bool
      */
-    public function forceDelete(User $user, ?Company $company = null)
+    public function forceDelete(User $user)
     {
         return $user->canDeleteCompany;
     }

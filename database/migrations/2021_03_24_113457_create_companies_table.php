@@ -4,12 +4,22 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+// Laravel migrations intentionally have no namespace
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
+/**
+ * Migration for creating the companies table.
+ *
+ * @package Company
+ */
 class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function up()
     {

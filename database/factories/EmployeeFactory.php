@@ -15,8 +15,8 @@ $factory->define(App\Employee::class, function (Faker $faker) {
             return $company->id;
         },
         'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->email,
-        'phone' => $faker->phoneNumber,
+        'last_name'  => $faker->lastName,
+        'email'      => $faker->email,
+        'phone'      => $faker->phoneNumber,
     ];
 });

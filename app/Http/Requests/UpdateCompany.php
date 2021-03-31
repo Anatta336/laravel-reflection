@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validation rules for updating a company.
+ *
+ * @package Company
+ */
 class UpdateCompany extends FormRequest
 {
     /**
@@ -33,7 +38,7 @@ class UpdateCompany extends FormRequest
 
     /**
      * Get the error messages for if validation rules do not pass.
-     * 
+     *
      * @return array
      */
     public function messages()

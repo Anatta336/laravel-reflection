@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class Employee extends Model
 {
     /**
-     * @var array
+     * @var array Fields that cannot be mass assigned.
      */
     protected $guarded = ['id'];
 

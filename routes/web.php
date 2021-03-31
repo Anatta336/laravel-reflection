@@ -23,4 +23,3 @@ Route::get('/company/{company}/employees/', 'EmployeesOfCompanyController@index'
 
 // add Auth routes, but set option to disable registering new users
 Auth::routes(['register' => false]);
-
