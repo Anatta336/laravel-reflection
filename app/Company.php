@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * Eloquent Model to represent companies.
@@ -37,8 +38,8 @@ class Company extends Model
      */
     public function storeLogo($file)
     {
-        // delete existing logo file
-        if ($this->logo) {
+        // delete existing logo file, unless it's a sample logo
+        if ($this->logo && !Str::contains($this->logo, 'logos/samples/')) {
             Storage::disk('public')->delete($this->logo);
         }
 

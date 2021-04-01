@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 $factory->define(Company::class, function (Faker $faker) {
     // find all available logo images (filter and then reindex)
     $logos = array_values(array_filter(
-        Storage::disk('public')->files('logos'),
+        Storage::disk('public')->files('logos/samples'),
         function ($path) {
             // exclude any file with a leading . such as .gitignore
             return !Str::contains($path, '/.');
