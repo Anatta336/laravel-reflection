@@ -508,4 +508,55 @@ class CompanyTest extends TestCase
         $responseEnd->assertSuccessful();
         $responseEnd->assertSessionHasNoErrors();
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function changing_logo_does_not_delete_sample_logo()
+    {
+        // act as user with edit permission
+        $user = factory(User::class)->create([
+            'canEditCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // use a fake version of the public drive
+        Storage::fake('public');
+
+        $sampleLogo   = UploadedFile::fake()->image('logo.png', 600, 300)->size(256);
+        $pathOfSample = Storage::disk('public')
+            ->putFileAs('logos/samples', $sampleLogo, 'sample-logo.png', 'public');
+
+        // create a company using sample logo
+        $company = factory(Company::class)->create([
+            'logo' => $pathOfSample,
+        ]);
+
+        // check that the sample logo is in the filesystem
+        Storage::disk('public')->assertExists($pathOfSample);
+
+        // create a replacement logo image
+        $newLogo = UploadedFile::fake()->image('logo.png', 600, 300)->size(256);
+
+        // send patch request to update a company, setting the new logo
+        $response = $this->patch(route('company.update', ['company' => $company]), [
+            'name' => 'Test Company',
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+            'logo-file' => $newLogo,
+        ]);
+
+        $company = Company::first();
+
+        // both the new logo and old sample logo should exist in the filesystem
+        Storage::disk('public')->assertExists($company->logo);
+        Storage::disk('public')->assertExists($pathOfSample);
+
+        // response should be successful with no errors
+        $responseEnd = $this->followRedirects($response);
+        $responseEnd->assertSuccessful();
+        $responseEnd->assertSessionHasNoErrors();
+    }
 }
