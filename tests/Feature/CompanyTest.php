@@ -559,4 +559,249 @@ class CompanyTest extends TestCase
         $responseEnd->assertSuccessful();
         $responseEnd->assertSessionHasNoErrors();
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_update_company_without_changing_logo()
+    {
+        // act as user with edit permission
+        $user = factory(User::class)->create([
+            'canEditCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // use a fake version of the public drive
+        Storage::fake('public');
+
+        $sampleLogo   = UploadedFile::fake()->image('logo.png', 600, 300)->size(256);
+        $pathOfSample = Storage::disk('public')
+            ->putFileAs('logos/samples', $sampleLogo, 'sample-logo.png', 'public');
+
+        // create a company using sample logo
+        $company = factory(Company::class)->create([
+            'logo' => $pathOfSample,
+        ]);
+
+        // check that the sample logo is in the filesystem
+        Storage::disk('public')->assertExists($pathOfSample);
+
+        // send patch request to update a company, without changing logo
+        $response = $this->patch(route('company.update', ['company' => $company]), [
+            'name' => 'Test Company',
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+        ]);
+
+        // database has updated company details, with old logo
+        $this->assertDatabaseHas('companies', [
+            'name' => 'Test Company',
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+            'logo' => $pathOfSample,
+        ]);
+
+        // old logo should still exist in the filesystem
+        Storage::disk('public')->assertExists($pathOfSample);
+
+        // response should be successful with no errors
+        $responseEnd = $this->followRedirects($response);
+        $responseEnd->assertSuccessful();
+        $responseEnd->assertSessionHasNoErrors();
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_not_create_company_without_name()
+    {
+        // act as user with creation permission
+        $user = factory(User::class)->create([
+            'canCreateCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        $file = UploadedFile::fake()->image('logo.png', 300, 300)->size(128);
+        Storage::fake('public');
+
+        // send post request to create a company without a name
+        $response = $this->post(route('company.store'), [
+            'name' => '',
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+            'logo-file' => $file,
+        ]);
+
+        // company was not created
+        $this->assertDatabaseMissing('companies', [
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+        ]);
+
+        // produces a validation error for the name
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_not_edit_company_to_have_no_name()
+    {
+        // act as user with edit permission
+        $user = factory(User::class)->create([
+            'canEditCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create the company that will be updated
+        $company         = factory(Company::class)->create();
+        $originalName    = $company->name;
+        $originalWebsite = $company->website;
+        $originalEmail   = $company->email;
+
+        // send patch request to update the company to have no name
+        $response = $this->patch(route('company.update', ['company' => $company]), [
+            'name' => '',
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+        ]);
+
+        // the updated company isn't in the database
+        $this->assertDatabaseMissing('companies', [
+            'website' => 'https://www.example.com',
+            'email' => 'contact@example.com',
+        ]);
+
+        // the original company is still in the database
+        $this->assertDatabaseHas('companies', [
+            'name' => $originalName,
+            'website' => $originalWebsite,
+            'email' => $originalEmail,
+        ]);
+
+        // expect validation error on name
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_partially_update_company()
+    {
+        // act as user with edit permission
+        $user = factory(User::class)->create([
+            'canEditCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create the company that will be updated
+        $company         = factory(Company::class)->create();
+        $originalWebsite = $company->website;
+        $originalEmail   = $company->email;
+
+        // create a fake image 300px square, 128KiB in size
+        $file = UploadedFile::fake()->image('logo.png', 300, 300)->size(128);
+
+        // use a fake version of the public drive
+        Storage::fake('public');
+
+        // send patch request to update a company
+        $response = $this->patch(route('company.update', ['company' => $company]), [
+            'name' => 'Test Company',
+            'logo-file' => $file,
+        ]);
+
+        // the company should have been partially updated
+        $this->assertDatabaseHas('companies', [
+            'name' => 'Test Company',
+            'website' => $originalWebsite,
+            'email' => $originalEmail,
+        ]);
+
+        // the file should have been uploaded (into the faked drive)
+        $company = Company::first();
+        Storage::disk('public')->assertExists($company->logo);
+
+        $responseEnd = $this->followRedirects($response);
+        $responseEnd->assertSuccessful();
+        $responseEnd->assertSessionHasNoErrors();
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function user_with_rights_can_delete_company()
+    {
+        // act as user with delete permission
+        $user = factory(User::class)->create([
+            'canDeleteCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create the company that will be deleted
+        $company    = factory(Company::class)->create();
+        $originalId = $company->id;
+
+        // check the company exists before attempting to delete
+        $this->assertDatabaseHas('companies', [
+            'id' => $originalId,
+        ]);
+
+        // send delete request
+        $response = $this->delete(route('company.destroy', ['company' => $company]));
+
+        // request should be successful with no errors
+        $response->assertSessionHasNoErrors();
+        $this->followRedirects($response)->assertSuccessful();
+
+        // company should be removed from database
+        $this->assertDatabaseMissing('companies', [
+            'id' => $originalId,
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function user_without_rights_can_not_delete_company()
+    {
+        // act as user without delete permission
+        $user = factory(User::class)->create([
+            'canEditCompany' => true,
+            'canDeleteEmployee' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create the company that will be deleted
+        $company    = factory(Company::class)->create();
+        $originalId = $company->id;
+
+        // check the company exists before attempting to delete
+        $this->assertDatabaseHas('companies', [
+            'id' => $originalId,
+        ]);
+
+        // send delete request
+        $response = $this->delete(route('company.destroy', ['company' => $company]));
+
+        // request should be forbidden
+        $response->assertForbidden();
+
+        // company should still be in the database
+        $this->assertDatabaseHas('companies', [
+            'id' => $originalId,
+        ]);
+    }
 }
