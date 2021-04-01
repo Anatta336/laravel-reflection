@@ -3,11 +3,8 @@
 namespace Tests\Feature;
 
 use App\Company;
-use App\Employee;
 use App\User;
-use Faker\Factory;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
