@@ -42,7 +42,7 @@ class EmployeeTest extends TestCase
             'email' => 'janesmith@example.com',
             'phone' => '(+44) 01334 555 974'
         ]));
-        
+
         // after redirects, end up at success
         $this->followRedirects($response)->assertSuccessful();
 
@@ -106,7 +106,7 @@ class EmployeeTest extends TestCase
             'email' => 'janesmith@example.com',
             'phone' => '(+44) 01334 555 974'
         ]));
-        
+
         $response->assertSessionHasErrors(['first_name', 'last_name']);
         $this->assertDatabaseMissing('employees', [
             'email' => 'janesmith@example.com',
@@ -198,10 +198,10 @@ class EmployeeTest extends TestCase
         $this->assertDatabaseHas('employees', [
             'id' => $toRemove->id,
         ]);
-        
+
         // delete one of the employees
         $response = $this->delete(route('employee.destroy', ['employee' => $toRemove]));
-        
+
         $response->assertSessionHasNoErrors();
 
         // check the employee is now gone
@@ -231,10 +231,10 @@ class EmployeeTest extends TestCase
         $this->assertDatabaseHas('employees', [
             'id' => $toRemove->id,
         ]);
-        
+
         // attempt to delete one of the employees
         $response = $this->delete(route('employee.destroy', ['employee' => $toRemove]));
-        
+
         // forbidden status
         $response->assertForbidden();
 
@@ -270,7 +270,7 @@ class EmployeeTest extends TestCase
         // response should be a success with no errors
         $response->assertSuccessful();
         $response->assertSessionHasNoErrors();
-        
+
         $response->assertViewHas('employee', $toView);
     }
 
@@ -334,5 +334,213 @@ class EmployeeTest extends TestCase
 
         // guest should be forbidden
         $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function user_with_rights_can_edit_employee()
+    {
+        $user = factory(User::class)->create([
+            'canEditEmployee' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create employee to edit
+        $employee          = factory(Employee::class)->create();
+        $originalFirstName = $employee->first_name;
+        $originalLastName  = $employee->last_name;
+
+        // check the employee is in database
+        $this->assertDatabaseHas('employees', [
+            'first_name' => $originalFirstName,
+            'last_name' => $originalLastName,
+        ]);
+
+        // attempt to edit employee
+        $response = $this->patch(route('employee.update', ['employee' => $employee]), [
+            'first_name' => 'Jane',
+            'last_name' => 'Smith',
+            'company_id' => null,
+            'email' => 'janesmith@example.com',
+            'phone' => '(+44) 01334 555 974'
+        ]);
+
+        // no errors
+        $response->assertSessionHasNoErrors();
+
+        // after redirects, end up at success
+        $this->followRedirects($response)->assertSuccessful();
+
+        // previous version of employee is no longer in the database
+        $this->assertDatabaseMissing('employees', [
+            'first_name' => $originalFirstName,
+            'last_name' => $originalLastName,
+        ]);
+
+        // updated employee is in the database
+        $this->assertDatabaseHas('employees', [
+            'first_name' => 'Jane',
+            'last_name' => 'Smith',
+            'email' => 'janesmith@example.com',
+            'phone' => '(+44) 01334 555 974',
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function user_without_rights_can_not_edit_employee()
+    {
+        $user = factory(User::class)->create([
+            'canEditEmployee' => false,
+            'canEditCompany' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create employee to edit
+        $employee          = factory(Employee::class)->create();
+        $originalId        = $employee->id;
+        $originalFirstName = $employee->first_name;
+        $originalLastName  = $employee->last_name;
+
+        // check the employee is in database
+        $this->assertDatabaseHas('employees', [
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // attempt to edit employee
+        $response = $this->patch(route('employee.update', ['employee' => $employee]), [
+            'first_name' => 'Jane',
+            'last_name'  => 'Smith',
+            'company_id' => null,
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974'
+        ]);
+
+        // request should be forbidden
+        $this->followRedirects($response)->assertForbidden();
+
+        // previous version of employee is still in the database
+        $this->assertDatabaseHas('employees', [
+            'id'         => $originalId,
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // updated version is not in the database
+        $this->assertDatabaseMissing('employees', [
+            'first_name' => 'Jane',
+            'last_name'  => 'Smith',
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974',
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_not_edit_employee_to_have_no_first_name()
+    {
+        $user = factory(User::class)->create([
+            'canEditEmployee' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create employee to edit
+        $employee          = factory(Employee::class)->create();
+        $originalId        = $employee->id;
+        $originalFirstName = $employee->first_name;
+        $originalLastName  = $employee->last_name;
+
+        // check the employee is in database
+        $this->assertDatabaseHas('employees', [
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // attempt to edit employee
+        $response = $this->patch(route('employee.update', ['employee' => $employee]), [
+            'first_name' => '',
+            'last_name'  => 'Smith',
+            'company_id' => null,
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974'
+        ]);
+
+        // should receive validation error for first_name
+        $response->assertSessionHasErrors('first_name');
+        $this->followRedirects($response)->assertSuccessful();
+
+        // previous version of employee is still in the database
+        $this->assertDatabaseHas('employees', [
+            'id'         => $originalId,
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // updated version is not in the database
+        $this->assertDatabaseMissing('employees', [
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974',
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_not_edit_employee_to_have_no_last_name()
+    {
+        $user = factory(User::class)->create([
+            'canEditEmployee' => true,
+        ]);
+        $this->actingAs($user);
+
+        // create employee to edit
+        $employee          = factory(Employee::class)->create();
+        $originalId        = $employee->id;
+        $originalFirstName = $employee->first_name;
+        $originalLastName  = $employee->last_name;
+
+        // check the employee is in database
+        $this->assertDatabaseHas('employees', [
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // attempt to edit employee
+        $response = $this->patch(route('employee.update', ['employee' => $employee]), [
+            'first_name' => 'Jane',
+            'last_name'  => '',
+            'company_id' => null,
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974'
+        ]);
+
+        // should receive validation error for last_name
+        $response->assertSessionHasErrors('last_name');
+        $this->followRedirects($response)->assertSuccessful();
+
+        // previous version of employee is still in the database
+        $this->assertDatabaseHas('employees', [
+            'id'         => $originalId,
+            'first_name' => $originalFirstName,
+            'last_name'  => $originalLastName,
+        ]);
+
+        // updated version is not in the database
+        $this->assertDatabaseMissing('employees', [
+            'email'      => 'janesmith@example.com',
+            'phone'      => '(+44) 01334 555 974',
+        ]);
     }
 }
