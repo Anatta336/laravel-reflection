@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Eloquent Model to represent companies.
@@ -25,5 +27,22 @@ class Company extends Model
     public function employees()
     {
         return $this->hasMany(Employee::class, 'company_id', 'id');
+    }
+
+    /**
+     * @param UploadedFile $file Image file containing logo. Should have
+     *                           already undergone any validation necessary.
+     *
+     * @return string Path of where the file is stored in the public disk.
+     */
+    public function storeLogo($file)
+    {
+        // delete existing logo file
+        if ($this->logo) {
+            Storage::disk('public')->delete($this->logo);
+        }
+
+        // store file and record path
+        return $this->logo = Storage::disk('public')->putFile('logos', $file);
     }
 }

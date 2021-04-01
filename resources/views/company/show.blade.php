@@ -29,7 +29,7 @@
 @if ($company->logo)
     </p>
     <img class="img-fluid img-thumbnail logo"
-        src="{{ asset('storage/' . $company->logo) }}"
+        src="{{ Storage::url($company->logo) }}"
         alt="Logo of {{ $company->name }}">
 @else
     <strong>None</strong>

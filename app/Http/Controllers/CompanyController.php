@@ -51,12 +51,13 @@ class CompanyController extends Controller
 
         $validated = $request->validated();
 
-        if ($request->hasFile('logo-file')) {
-            $validated['logo'] = $request->file('logo-file')->storePublicly('logos', 'public');
-        }
-
         unset($validated['logo-file']);
         $company = new Company($validated);
+
+        if ($request->hasFile('logo-file')) {
+            $company->storeLogo($request->file('logo-file'));
+        }
+
         $company->save();
 
         return redirect()
@@ -110,7 +111,7 @@ class CompanyController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('logo-file')) {
-            $validated['logo'] = $request->file('logo-file')->storePublicly('logos', 'public');
+            $company->storeLogo($request->file('logo-file'));
         }
 
         unset($validated['logo-file']);

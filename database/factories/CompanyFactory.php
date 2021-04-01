@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 $factory->define(Company::class, function (Faker $faker) {
-    // find all available logo images
-    $logos = array_filter(
+    // find all available logo images (filter and then reindex)
+    $logos = array_values(array_filter(
         Storage::disk('public')->files('logos'),
         function ($path) {
             // exclude any file with a leading . such as .gitignore
             return !Str::contains($path, '/.');
         }
-    );
+    ));
 
     if (count($logos) > 0) {
         // pick a random logo to use
