@@ -43,6 +43,6 @@ class Company extends Model
         }
 
         // store file and record path
-        return $this->logo = Storage::disk('public')->putFile('logos', $file);
+        return $this->logo = Storage::disk('public')->putFile('logos', $file, 'public');
     }
 }

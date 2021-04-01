@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Company;
 use App\Employee;
-use Faker\Factory;
+use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 // phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
@@ -30,7 +30,7 @@ class EmployeeTest extends TestCase
      */
     public function user_with_rights_can_create_new_employee()
     {
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canCreateEmployee' => true,
         ]);
         $this->actingAs($user);
@@ -65,7 +65,7 @@ class EmployeeTest extends TestCase
      */
     public function user_without_rights_can_not_create_new_employee()
     {
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canCreateEmployee' => false,
         ]);
         $this->actingAs($user);
@@ -94,7 +94,7 @@ class EmployeeTest extends TestCase
      */
     public function can_not_create_new_employee_without_name()
     {
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canCreateEmployee' => true,
         ]);
         $this->actingAs($user);
@@ -121,8 +121,8 @@ class EmployeeTest extends TestCase
      */
     public function can_create_employee_of_company()
     {
-        $company = factory('App\Company')->create();
-        $user    = factory('App\User')->create([
+        $company = factory(Company::class)->create();
+        $user    = factory(User::class)->create([
             'canCreateEmployee' => true,
         ]);
         $this->actingAs($user);
@@ -155,7 +155,7 @@ class EmployeeTest extends TestCase
      */
     public function can_not_create_employee_of_missing_company()
     {
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canCreateEmployee' => true,
         ]);
         $this->actingAs($user);
@@ -185,13 +185,13 @@ class EmployeeTest extends TestCase
     public function can_delete_employee()
     {
         // act as a user with destroy rights
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canDeleteEmployee' => true,
         ]);
         $this->actingAs($user);
 
         // create some employees (not using User's rights)
-        $employees = factory('App\Employee', 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $toRemove  = $employees[2];
 
         // check they're definitely in the database
@@ -218,13 +218,13 @@ class EmployeeTest extends TestCase
     public function without_right_can_not_delete_employee()
     {
         // act as a user with destroy rights
-        $user = factory('App\User')->create([
+        $user = factory(User::class)->create([
             'canDeleteEmployee' => false,
         ]);
         $this->actingAs($user);
 
         // create some employees (not using User's rights)
-        $employees = factory('App\Employee', 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $toRemove  = $employees[2];
 
         // check they're definitely in the database
@@ -252,11 +252,11 @@ class EmployeeTest extends TestCase
     public function user_can_view_employee()
     {
         // user with no special rights
-        $user = factory('App\User')->create();
+        $user = factory(User::class)->create();
         $this->actingAs($user);
 
         // create employees
-        $employees = factory('App\Employee', 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $toView    = $employees[1];
 
         // check target is in database
@@ -282,7 +282,7 @@ class EmployeeTest extends TestCase
     public function guest_can_not_view_employee()
     {
         // create employees
-        $employees = factory('App\Employee', 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $toView    = $employees[1];
 
         // check target is in database
@@ -305,11 +305,11 @@ class EmployeeTest extends TestCase
     public function user_can_list_employees()
     {
         // user with no special rights
-        $user = factory('App\User')->create();
+        $user = factory(User::class)->create();
         $this->actingAs($user);
 
         // create employees
-        factory('App\Employee', 5)->create();
+        factory(Employee::class, 5)->create();
 
         // attempt to view list of employees
         $response = $this->get(route('employee.index'));
@@ -327,7 +327,7 @@ class EmployeeTest extends TestCase
     public function guest_can_not_list_employees()
     {
         // create employees
-        factory('App\Employee', 5)->create();
+        factory(Employee::class, 5)->create();
 
         // attempt to view list of employees
         $response = $this->get(route('employee.index'));
