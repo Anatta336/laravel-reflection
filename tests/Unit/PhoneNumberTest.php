@@ -153,4 +153,17 @@ class PhoneNumberTest extends TestCase
         $this->assertFalse($validator->passes('phone', '0123    456'));
         $this->assertSame('Phone number has too many spaces in it.', $validator->message());
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function rejects_not_number_unicode_characters()
+    {
+        $validator = new PhoneNumber();
+
+        $this->assertFalse($validator->passes('phone', '𝓺𝓾𝓲𝓬𝓴 012345'));
+        $this->assertSame('Invalid characters in phone number: 𝓺, 𝓾, 𝓲, 𝓬, 𝓴', $validator->message());
+    }
 }

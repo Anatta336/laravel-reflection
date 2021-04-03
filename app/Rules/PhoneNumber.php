@@ -48,7 +48,9 @@ class PhoneNumber implements Rule
         // "(+44) 01235 67890" is valid
         // "555-4433-2232" is valid
         // "1800 DEALS" is not valid
-        $hasInvalidChars = preg_match_all('/[^0-9+()\.x -]/', $value, $this->foundInvalid);
+        // (*UTF8) at start and u at the end of the regex allows it to deal with
+        // UTF-8 input nicely.
+        $hasInvalidChars = preg_match_all('/(*UTF8)[^0-9+()\.x -]/u', $value, $this->foundInvalid);
         if ($hasInvalidChars) {
             return false;
         }
