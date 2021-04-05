@@ -49,14 +49,14 @@ class PhoneNumber implements Rule
         // "555-4433-2232" is valid
         // "1800 DEALS" is not valid
         // (*UTF8) at start and u at the end of the regex allows it to deal with
-        // UTF-8 input nicely.
+        // UTF-8 input nicely. Details: https://stackoverflow.com/a/9473867
         $hasInvalidChars = preg_match_all('/(*UTF8)[^0-9+()\.x -]/u', $value, $this->foundInvalid);
         if ($hasInvalidChars) {
             return false;
         }
 
-        // matches a series of 2 or more spaces
-        $this->hasGap = preg_match('/( {2})+/', $value) > 0;
+        // matches a series of 2 or more separators (., +, space, -)
+        $this->hasGap = preg_match('/([\.+ -]{2})+/', $value) > 0;
         if ($this->hasGap) {
             return false;
         }
@@ -79,7 +79,7 @@ class PhoneNumber implements Rule
                 . implode(', ', $invalidChars);
         }
         if ($this->hasGap) {
-            return 'Phone number has too many spaces in it.';
+            return 'Phone number shouldn\'t have a chain of separators in it.';
         }
         return 'Unknown phone number validation error.';
     }

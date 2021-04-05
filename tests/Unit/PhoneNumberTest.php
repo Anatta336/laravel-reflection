@@ -151,7 +151,33 @@ class PhoneNumberTest extends TestCase
         $validator = new PhoneNumber();
 
         $this->assertFalse($validator->passes('phone', '0123    456'));
-        $this->assertSame('Phone number has too many spaces in it.', $validator->message());
+        $this->assertSame('Phone number shouldn\'t have a chain of separators in it.', $validator->message());
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function rejects_multi_dot_separators()
+    {
+        $validator = new PhoneNumber();
+
+        $this->assertFalse($validator->passes('phone', '0123...456'));
+        $this->assertSame('Phone number shouldn\'t have a chain of separators in it.', $validator->message());
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function rejects_multi_hyphen_separators()
+    {
+        $validator = new PhoneNumber();
+
+        $this->assertFalse($validator->passes('phone', '0123--456'));
+        $this->assertSame('Phone number shouldn\'t have a chain of separators in it.', $validator->message());
     }
 
     /**
