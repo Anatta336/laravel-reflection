@@ -2,7 +2,7 @@
 This is a Laravel practice project as part of my training with *Netmatters Ltd*.
 
 ## Building
-1. Rename `.env.example` to `.env`. The values in `env.example` will use a local SQLite database file.
+1. Rename `.env.example` to `.env`. If desired the environment variables can be changed to use a remote database. The settings in `.env.example` will use a local SQLite database file.
 
 2. Install dependencies, set up a symlink for storage, migrate and seed database, all by running:
 ```
